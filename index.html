@@ -37,6 +37,23 @@
     font-size:16px;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:-2;
+    background:
+      radial-gradient(1100px 760px at 90% -8%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 62%),
+      radial-gradient(900px 640px at -8% 105%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 58%);
+    transition:background 0.7s ease;
+    pointer-events:none;
+  }
+  body::after{
+    content:"";
+    position:fixed; inset:0; z-index:-1;
+    opacity:0.035;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    pointer-events:none;
   }
   img,svg{max-width:100%;}
 
@@ -113,6 +130,15 @@
     opacity:0.55; pointer-events:none;
   }
   .hero-inner{position:relative; z-index:1;}
+  .hero-avatar{
+    width:88px; height:88px; border-radius:50%; overflow:hidden;
+    background:var(--ink); color:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif); font-size:1.5rem; font-weight:560;
+    margin-bottom:26px; border:3px solid var(--surface);
+    box-shadow:0 0 0 1px var(--line-strong);
+  }
+  .hero-avatar img{width:100%; height:100%; object-fit:cover; display:block;}
   .hero-kicker{
     font-family:var(--sans); font-weight:600; font-size:0.95rem;
     color:var(--accent-dev); margin:0 0 14px;
@@ -122,8 +148,14 @@
     line-height:1.04; margin:0 0 22px; letter-spacing:-0.01em; max-width:14ch;
   }
   .hero-lede{
-    font-size:1.14rem; color:var(--ink-soft); max-width:56ch; margin:0 0 30px;
+    font-size:1.14rem; color:var(--ink-soft); max-width:56ch; margin:0 0 18px;
   }
+  .hero-meta{
+    display:flex; align-items:center; gap:9px;
+    font-size:0.9rem; color:var(--ink-faint); margin:0 0 32px;
+  }
+  .hero-meta-icon{flex:none; display:flex; color:var(--ink-faint);}
+  .hero-meta-icon svg{width:16px; height:16px;}
   .hero-actions{display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-bottom:44px;}
   .btn{
     display:inline-flex; align-items:center; gap:9px;
@@ -165,24 +197,33 @@
   .section-lede{color:var(--ink-soft); max-width:62ch; font-size:1.04rem; margin:0 0 52px;}
 
   .service-note{
-    display:flex; align-items:center; gap:16px; max-width:62ch;
-    padding:16px 20px; margin:-24px 0 52px;
-    border:1px solid var(--line-strong); border-radius:10px; background:var(--surface);
+    display:flex; align-items:center; gap:18px; max-width:62ch;
+    padding:22px 26px; margin:-16px 0 56px;
+    border:1px solid color-mix(in srgb, var(--accent-dev) 30%, var(--line-strong));
+    border-left:4px solid var(--accent-dev);
+    border-radius:12px;
+    background:#F1F6F4;
+    background:color-mix(in srgb, var(--accent-dev) 8%, var(--surface));
   }
   .service-icon{
-    flex:none; width:38px; height:38px; border-radius:50%;
-    background:var(--paper); border:1px solid var(--line-strong);
-    display:flex; align-items:center; justify-content:center; color:var(--accent-dev);
+    flex:none; width:44px; height:44px; border-radius:50%;
+    background:var(--accent-dev); color:#fff;
+    display:flex; align-items:center; justify-content:center;
   }
-  .service-icon svg{width:18px; height:18px;}
-  .service-text{margin:0; font-size:0.95rem; color:var(--ink-soft);}
+  .service-icon svg{width:20px; height:20px;}
+  .service-text{margin:0; font-size:1rem; font-weight:600; color:var(--ink);}
   .service-link{
-    display:inline-block; margin-left:8px; font-weight:600; color:var(--ink);
-    text-decoration:none; border-bottom:1px solid var(--accent-dev); padding-bottom:1px;
+    display:inline-flex; align-items:center; gap:6px;
+    margin-left:6px; font-weight:700; font-size:0.9rem; color:#fff;
+    background:var(--accent-dev); text-decoration:none;
+    padding:9px 18px; border-radius:999px; white-space:nowrap;
+    transition:transform .15s ease, box-shadow .15s ease;
   }
-  @media (max-width:560px){
-    .service-note{flex-direction:column; align-items:flex-start; gap:10px; margin-top:-8px;}
-    .service-link{margin-left:0; display:block; margin-top:4px;}
+  .service-link:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(43,110,99,0.28);}
+  .service-link svg{width:13px; height:13px;}
+  @media (max-width:640px){
+    .service-note{flex-direction:column; align-items:flex-start; gap:14px; margin-top:-8px; padding:20px 20px;}
+    .service-link{margin-left:0;}
   }
 
   /* Skills */
@@ -206,7 +247,7 @@
   .timeline li:last-child{padding-bottom:0;}
   .timeline li::before{
     content:""; position:absolute; left:0; top:6px; width:13px; height:13px; border-radius:50%;
-    background:var(--paper); border:2px solid var(--accent-dev);
+    background:var(--paper); border:2px solid var(--accent); transition:border-color 0.4s ease;
   }
   .tl-date{font-size:0.84rem; color:var(--ink-faint); font-weight:600; margin-bottom:6px;}
   .tl-role{font-family:var(--serif); font-weight:560; font-size:1.18rem; margin:0 0 2px;}
@@ -238,6 +279,20 @@
   .cert-title{font-weight:600; font-size:0.98rem;}
   .cert-desc{font-size:0.9rem; color:var(--ink-soft); margin-top:3px;}
 
+  .conf-card{
+    display:flex; gap:18px; align-items:flex-start; max-width:72ch;
+    border:1px solid var(--line-strong); background:var(--surface); border-radius:10px;
+    padding:24px 26px; margin-bottom:76px;
+  }
+  .conf-icon{
+    flex:none; width:40px; height:40px; border-radius:50%;
+    background:var(--paper); border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center; color:var(--accent-dev);
+  }
+  .conf-icon svg{width:19px; height:19px;}
+  .conf-title{font-family:var(--serif); font-style:italic; font-size:1.05rem; margin:0 0 8px; color:var(--ink); line-height:1.4;}
+  .conf-meta{font-size:0.88rem; color:var(--ink-soft); margin:0;}
+
   /* Community */
   .org-card{
     border:1px solid var(--line-strong); background:var(--surface); border-radius:12px;
@@ -265,7 +320,7 @@
   .thread-desc{color:var(--ink-soft); max-width:60ch;}
 
   /* Personal */
-  .personal-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;}
+  .personal-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:20px;}
   .personal-card{
     border:1px solid var(--line-strong); background:var(--surface); border-radius:10px;
     padding:26px 24px;
@@ -280,6 +335,7 @@
   .dots{display:flex; gap:4px; margin-top:6px;}
   .dots span{width:7px; height:7px; border-radius:50%; background:var(--line-strong);}
   .dots span.filled{background:var(--accent-personal);}
+  .lang-note{font-size:0.82rem; color:var(--ink-faint); margin:18px 0 0; padding-top:14px; border-top:1px solid var(--line);}
 
   /* Footer */
   footer{border-top:1px solid var(--line); padding:64px 0 40px;}
@@ -382,10 +438,19 @@
     </svg>
 
     <div class="container hero-inner">
+      <div class="hero-avatar">
+        <span class="hero-avatar-fallback" data-i18n-ignore>CBO</span>
+      </div>
       <p class="hero-kicker" data-i18n="hero.kicker">Full Stack Geliştirici</p>
       <h1 class="hero-name">Ceren Bilge Oyar</h1>
       <p class="hero-lede" data-i18n="hero.lede">
-        Ankara merkezli bir Full Stack Developer'ım; üç yıldır .NET ekosisteminde büyük ölçekli kamu sistemleri geliştiriyorum. Yazılımın yanında bir gençlik derneğine başkanlık ediyor, piyano çalıyor ve eskiden lisanslı voleybol oynuyordum.
+        Ankara merkezli bir Full Stack Developer'ım; üç yıldır .NET ekosisteminde büyük ölçekli kamu sistemleri geliştiriyorum. Yazılımın yanında bir gençlik derneğine başkanlık ediyor ve piyano çalıyorum.
+      </p>
+      <p class="hero-meta">
+        <span class="hero-meta-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5 12 5l10 4.5-10 4.5-10-4.5Z"/><path d="M6 11.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4.5"/><path d="M21 9.5v6"/></svg>
+        </span>
+        <span data-i18n="hero.education">TED Üniversitesi, Bilgisayar Mühendisliği (2019–2024) · Ankara Üniversitesi, Yüksek Lisans (2026–Devam ediyor)</span>
       </p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="mailto:bilgeoyar01@gmail.com">
@@ -405,7 +470,7 @@
       <ul class="facets">
         <li><a href="#developer"><span class="swatch" aria-hidden="true"></span><span data-i18n="hero.facet.dev">Geliştirici</span></a></li>
         <li><a href="#community"><span class="swatch" aria-hidden="true"></span><span data-i18n="hero.facet.community">Topluluk Lideri</span></a></li>
-        <li><a href="#personal"><span class="swatch" aria-hidden="true"></span><span data-i18n="hero.facet.personal">Piyanist &amp; Voleybolcu</span></a></li>
+        <li><a href="#personal"><span class="swatch" aria-hidden="true"></span><span data-i18n="hero.facet.personal">Piyanist</span></a></li>
       </ul>
     </div>
   </section>
@@ -562,6 +627,17 @@
           </ul>
         </div>
       </div>
+
+      <h3 class="subhead" data-i18n="dev.confHeading">Konferans &amp; Sunumlar</h3>
+      <div class="conf-card">
+        <span class="conf-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
+        </span>
+        <div>
+          <p class="conf-title" data-i18n="conf1.title">“Planar X-Ray Undulator Optimization by Evolutionary/Genetic Algorithms”</p>
+          <p class="conf-meta" data-i18n="conf1.meta">Türk Fizik Derneği (TFD) 42. Uluslararası Fizik Kongresi'nde sundum · 31 Ağustos – 4 Eylül 2026</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -590,15 +666,44 @@
         </a>
       </div>
 
-      <div class="thread">
-        <div class="thread-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
-        </div>
-        <div>
-          <div class="thread-label" data-i18n="community.threadLabel">Uluslararası Bağlantı</div>
-          <p class="thread-desc" data-i18n="community.threadDesc">Uluslararası deneyimim Erasmus+ ile başladı: 2023'te Portekiz'deki IAFA'da staj yaptım. Bugün derneğimizin Erasmus+ projeleri aracılığıyla aynı fırsatı başka gençlere sunuyoruz.</p>
-        </div>
-      </div>
+      <h3 class="subhead" data-i18n="community.journeyHeading">Uluslararası Deneyim</h3>
+      <ol class="timeline">
+        <li>
+          <div class="tl-date">2016 – 2018</div>
+          <div class="tl-role" data-i18n="comm1.role">Avrupa Gençlik Kampı</div>
+          <p class="tl-desc" data-i18n="comm1.desc">Üç yıl üst üste katıldığım uluslararası yaz kamplarında farklı ülkelerden gençlerle bir araya geldim (10, 8 ve 7 gün).</p>
+        </li>
+        <li>
+          <div class="tl-date">2019</div>
+          <div class="tl-role" data-i18n="comm2.role">İlk Erasmus+ deneyimim (KA152)</div>
+          <div class="tl-company">iCITIZEN · Palermo, İtalya</div>
+          <p class="tl-desc" data-i18n="comm2.desc">Sosyal medyada siyasi aşırılığı önlemeye yönelik bir vatandaşlık eğitimi ve medya okuryazarlığı projesine katıldım.</p>
+        </li>
+        <li>
+          <div class="tl-date">2021</div>
+          <div class="tl-role" data-i18n="comm3.role">Erasmus+ Youthpass</div>
+          <div class="tl-company">Digital Youth at Your Best · Ankara, Türkiye</div>
+          <p class="tl-desc" data-i18n="comm3.desc">Gençlik çalışanlarının hareketliliğine yönelik bir Erasmus+ programına katıldım.</p>
+        </li>
+        <li>
+          <div class="tl-date" data-i18n="comm4.date">2021 · Aralık</div>
+          <div class="tl-role" data-i18n="comm4.role">Birleşmiş Milletler — İdari Personel</div>
+          <div class="tl-company">TED Üniversitesi · Ankara</div>
+          <p class="tl-desc" data-i18n="comm4.desc">TED Üniversitesi'nde düzenlenen bir Birleşmiş Milletler etkinliğinde idari ekipte görev aldım.</p>
+        </li>
+        <li>
+          <div class="tl-date">06.2023 – 09.2023</div>
+          <div class="tl-role" data-i18n="comm5.role">Erasmus+ Stajı</div>
+          <div class="tl-company">IAFA · Braga, Portekiz</div>
+          <p class="tl-desc" data-i18n="comm5.desc">Portekiz'de uluslararası bir ekip içinde staj yaparak farklı bir çalışma kültüründe deneyim kazandım.</p>
+        </li>
+        <li>
+          <div class="tl-date" data-i18n="comm6.date">2023 · Eylül</div>
+          <div class="tl-role" data-i18n="comm6.role">Bilge Gençlik Eğitim Derneği'ni kurdum</div>
+          <div class="tl-company">Kızılcahamam, Ankara</div>
+          <p class="tl-desc" data-i18n="comm6.desc">Yıllar içinde biriken uluslararası deneyimimi gençlerle paylaşmak için derneği kurdum. Bugün aynı fırsatları kendi Erasmus+ projelerimiz aracılığıyla başka gençlere sunuyoruz.</p>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -622,18 +727,13 @@
             <span class="lang-level" data-i18n="personal.lang.esLevel">Başlangıç</span>
           </div>
           <div class="dots"><span class="filled"></span><span></span><span></span><span></span><span></span></div>
+          <p class="lang-note" data-i18n="personal.langNote">Frances King School of English, Dublin (2016) — kurs tamamlama sertifikası.</p>
         </div>
 
         <div class="personal-card">
           <svg class="personal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9"/><path d="M3 17h18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Z"/><path d="M7 10v3M10.5 10v4M14 10v3M17.5 10v4"/></svg>
           <h3 data-i18n="personal.pianoHeading">Piyano</h3>
-          <p data-i18n="personal.pianoDesc">London College of Music (LCM) kademeli piyano sınavlarından sertifikalarım var.</p>
-        </div>
-
-        <div class="personal-card">
-          <svg class="personal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 7c2 2 4 2.6 6 2.6S16 9 18 7M4.5 14c2.5-1 5-1.2 7.5-1.2s5 .2 7.5 1.2M9 3.3C10 6 10 9 8.7 12c-1.3 3-1.3 5.7-.2 8.5"/></svg>
-          <h3 data-i18n="personal.volleyHeading">Voleybol</h3>
-          <p data-i18n="personal.volleyDesc">Eskiden lisanslı olarak voleybol oynadım, bugün amatör düzeyde oynamaya devam ediyorum.</p>
+          <p data-i18n="personal.pianoDesc">University of West London — London College of Music (LCM) sınavlarından Pianoforte Grade 1 ve Grade 3 sertifikalarına sahibim.</p>
         </div>
       </div>
     </div>
@@ -677,11 +777,12 @@
       "nav.community": "Topluluk",
       "nav.personal": "Kişisel",
       "hero.kicker": "Full Stack Geliştirici",
-      "hero.lede": "Ankara merkezli bir Full Stack Developer'ım; üç yıldır .NET ekosisteminde büyük ölçekli kamu sistemleri geliştiriyorum. Yazılımın yanında bir gençlik derneğine başkanlık ediyor, piyano çalıyor ve eskiden lisanslı voleybol oynuyordum.",
+      "hero.lede": "Ankara merkezli bir Full Stack Developer'ım; üç yıldır .NET ekosisteminde büyük ölçekli kamu sistemleri geliştiriyorum. Yazılımın yanında bir gençlik derneğine başkanlık ediyor ve piyano çalıyorum.",
+      "hero.education": "TED Üniversitesi, Bilgisayar Mühendisliği (2019–2024) · Ankara Üniversitesi, Yüksek Lisans (2026–Devam ediyor)",
       "hero.ctaEmail": "E-posta gönder",
       "hero.facet.dev": "Geliştirici",
       "hero.facet.community": "Topluluk Lideri",
-      "hero.facet.personal": "Piyanist & Voleybolcu",
+      "hero.facet.personal": "Piyanist",
       "dev.eyebrow": "Yazılım Geliştirici",
       "dev.headline": "Üç yıldır büyük ölçekli sistemler kuruyorum.",
       "dev.about": "\u002ENET Core, .NET, MVC, Entity Framework, SQL ve MongoDB alanlarında üç yıllık profesyonel deneyime sahip bir Full Stack Developer'ım. Backend geliştirme ve veritabanı optimizasyonunda güçlü bir geçmişim var; HTML, CSS ve JavaScript ile frontend becerileriyle destekliyorum. Agile/Scrum ortamlarında çalışıyor, bir gençlik derneğinin başkanlığını yürütüyorum.",
@@ -724,6 +825,9 @@
       "dev.certsHeading": "Sertifikalar",
       "cert1.desc": "SQL sorguları ve veri analizi tekniklerinde uzmanlaştım.",
       "cert2.desc": "Bellek yönetimi, segmentasyon ve sayfalama.",
+      "dev.confHeading": "Konferans & Sunumlar",
+      "conf1.title": "\u201CPlanar X-Ray Undulator Optimization by Evolutionary/Genetic Algorithms\u201D",
+      "conf1.meta": "Türk Fizik Derneği (TFD) 42. Uluslararası Fizik Kongresi'nde sundum · 31 Ağustos – 4 Eylül 2026",
       "community.eyebrow": "Topluluk Liderliği",
       "community.headline": "Bir gençlik derneğine başkanlık ediyorum.",
       "community.role": "Kurucu & Başkan",
@@ -733,8 +837,21 @@
       "community.stat3": "Katılımcı",
       "community.stat4": "Gönüllü",
       "community.link": "Derneği ziyaret et",
-      "community.threadLabel": "Uluslararası Bağlantı",
-      "community.threadDesc": "Uluslararası deneyimim Erasmus+ ile başladı: 2023'te Portekiz'deki IAFA'da staj yaptım. Bugün derneğimizin Erasmus+ projeleri aracılığıyla aynı fırsatı başka gençlere sunuyoruz.",
+      "community.journeyHeading": "Uluslararası Deneyim",
+      "comm1.role": "Avrupa Gençlik Kampı",
+      "comm1.desc": "Üç yıl üst üste katıldığım uluslararası yaz kamplarında farklı ülkelerden gençlerle bir araya geldim (10, 8 ve 7 gün).",
+      "comm2.role": "İlk Erasmus+ deneyimim (KA152)",
+      "comm2.desc": "Sosyal medyada siyasi aşırılığı önlemeye yönelik bir vatandaşlık eğitimi ve medya okuryazarlığı projesine katıldım.",
+      "comm3.role": "Erasmus+ Youthpass",
+      "comm3.desc": "Gençlik çalışanlarının hareketliliğine yönelik bir Erasmus+ programına katıldım.",
+      "comm4.date": "2021 · Aralık",
+      "comm4.role": "Birleşmiş Milletler — İdari Personel",
+      "comm4.desc": "TED Üniversitesi'nde düzenlenen bir Birleşmiş Milletler etkinliğinde idari ekipte görev aldım.",
+      "comm5.role": "Erasmus+ Stajı",
+      "comm5.desc": "Portekiz'de uluslararası bir ekip içinde staj yaparak farklı bir çalışma kültüründe deneyim kazandım.",
+      "comm6.date": "2023 · Eylül",
+      "comm6.role": "Bilge Gençlik Eğitim Derneği'ni kurdum",
+      "comm6.desc": "Yıllar içinde biriken uluslararası deneyimimi gençlerle paylaşmak için derneği kurdum. Bugün aynı fırsatları kendi Erasmus+ projelerimiz aracılığıyla başka gençlere sunuyoruz.",
       "personal.eyebrow": "Kişisel & Sosyal",
       "personal.headline": "Ekranın dışında da üretmeyi seviyorum.",
       "personal.langHeading": "Diller",
@@ -742,10 +859,9 @@
       "personal.lang.enLevel": "İleri",
       "personal.lang.es": "İspanyolca",
       "personal.lang.esLevel": "Başlangıç",
+      "personal.langNote": "Frances King School of English, Dublin (2016) — kurs tamamlama sertifikası.",
       "personal.pianoHeading": "Piyano",
-      "personal.pianoDesc": "London College of Music (LCM) kademeli piyano sınavlarından sertifikalarım var.",
-      "personal.volleyHeading": "Voleybol",
-      "personal.volleyDesc": "Eskiden lisanslı olarak voleybol oynadım, bugün amatör düzeyde oynamaya devam ediyorum.",
+      "personal.pianoDesc": "University of West London — London College of Music (LCM) sınavlarından Pianoforte Grade 1 ve Grade 3 sertifikalarına sahibim.",
       "footer.heading": "Birlikte çalışalım",
       "footer.desc": "Yeni fırsatlara ve iş birliklerine açığım.",
       "footer.rights": "Tüm hakları saklıdır."
@@ -757,11 +873,12 @@
       "nav.community": "Community",
       "nav.personal": "Personal",
       "hero.kicker": "Full Stack Developer",
-      "hero.lede": "I'm a Full Stack Developer based in Ankara, building large-scale public systems in the .NET ecosystem for three years. Alongside software, I serve as president of a youth association, play the piano, and used to play volleyball at a licensed, competitive level.",
+      "hero.lede": "I'm a Full Stack Developer based in Ankara, building large-scale public systems in the .NET ecosystem for three years. Alongside software, I serve as president of a youth association and play the piano.",
+      "hero.education": "TED University, Computer Engineering (2019–2024) · Ankara University, M.Sc. (2026–Present)",
       "hero.ctaEmail": "Email me",
       "hero.facet.dev": "Developer",
       "hero.facet.community": "Community Leader",
-      "hero.facet.personal": "Pianist & Volleyball Player",
+      "hero.facet.personal": "Pianist",
       "dev.eyebrow": "Software Developer",
       "dev.headline": "Building large-scale systems for three years.",
       "dev.about": "Full Stack Developer with 3 years of professional experience in .NET Core, .NET, MVC, Entity Framework, SQL, and MongoDB. Strong background in backend development and database optimization, combined with frontend skills in HTML, CSS, and JavaScript. Experienced in Agile/Scrum environments, and currently president of a youth association.",
@@ -804,6 +921,9 @@
       "dev.certsHeading": "Certifications",
       "cert1.desc": "Mastered SQL queries and data analysis techniques.",
       "cert2.desc": "Memory management, segmentation, and paging.",
+      "dev.confHeading": "Conferences & Presentations",
+      "conf1.title": "\u201CPlanar X-Ray Undulator Optimization by Evolutionary/Genetic Algorithms\u201D",
+      "conf1.meta": "Presented at the Turkish Physical Society's (TFD) 42nd International Physics Congress · August 31 – September 4, 2026",
       "community.eyebrow": "Community Leadership",
       "community.headline": "I serve as president of a youth association.",
       "community.role": "Founder & President",
@@ -813,8 +933,21 @@
       "community.stat3": "Participants",
       "community.stat4": "Volunteers",
       "community.link": "Visit the association",
-      "community.threadLabel": "International Thread",
-      "community.threadDesc": "My international experience started with Erasmus+: I interned at IAFA in Portugal in 2023. Today our association creates the same opportunity for other young people through its own Erasmus+ projects.",
+      "community.journeyHeading": "International Experience",
+      "comm1.role": "European Youth Camp",
+      "comm1.desc": "Took part in international summer camps three years running, meeting young people from across Europe (10, 8, and 7 days).",
+      "comm2.role": "My first Erasmus+ experience (KA152)",
+      "comm2.desc": "Took part in a citizenship-education and media-literacy project aimed at preventing political extremism on social media.",
+      "comm3.role": "Erasmus+ Youthpass",
+      "comm3.desc": "Took part in an Erasmus+ mobility programme for youth workers.",
+      "comm4.date": "2021 · December",
+      "comm4.role": "United Nations — Administrative Staff",
+      "comm4.desc": "Supported the administrative team for a United Nations event hosted at TED University.",
+      "comm5.role": "Erasmus+ Internship",
+      "comm5.desc": "Completed an international internship in Portugal, gaining experience within a different professional culture.",
+      "comm6.date": "2023 · September",
+      "comm6.role": "Founded Bilge Gençlik Eğitim Derneği",
+      "comm6.desc": "Founded the association to share the international experience I'd built up over the years with other young people. Today we offer those same opportunities to more youth through our own Erasmus+ projects.",
       "personal.eyebrow": "Personal & Social",
       "personal.headline": "I like making things off-screen too.",
       "personal.langHeading": "Languages",
@@ -822,10 +955,9 @@
       "personal.lang.enLevel": "Advanced",
       "personal.lang.es": "Spanish",
       "personal.lang.esLevel": "Beginner",
+      "personal.langNote": "Frances King School of English, Dublin (2016) — certificate of course completion.",
       "personal.pianoHeading": "Piano",
-      "personal.pianoDesc": "Certified through London College of Music (LCM) graded piano exams.",
-      "personal.volleyHeading": "Volleyball",
-      "personal.volleyDesc": "I used to play volleyball at a licensed, competitive level; today I play at an amateur level.",
+      "personal.pianoDesc": "University of West London — certified through London College of Music (LCM) exams, Pianoforte Grade 1 and Grade 3.",
       "footer.heading": "Let's work together",
       "footer.desc": "Open to new opportunities and collaborations.",
       "footer.rights": "All rights reserved."
