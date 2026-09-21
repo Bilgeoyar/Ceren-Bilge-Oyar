@@ -26,7 +26,7 @@
     --serif:"Fraunces", Georgia, serif;
     --sans:"Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
-
+.hero-meta-lines{display:flex; flex-direction:column; gap:3px;}
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth; scroll-padding-top:calc(var(--nav-h) + 18px);}
   body{
@@ -450,7 +450,10 @@
         <span class="hero-meta-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5 12 5l10 4.5-10 4.5-10-4.5Z"/><path d="M6 11.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4.5"/><path d="M21 9.5v6"/></svg>
         </span>
-        <span data-i18n="hero.education">TED Üniversitesi, Bilgisayar Mühendisliği (2019–2024) · Ankara Üniversitesi, Yüksek Lisans (2026–Devam ediyor)</span>
+        <span class="hero-meta-lines">
+  <span data-i18n="hero.education1">Ankara Üniversitesi, Yüksek Lisans (2026–Devam ediyor)</span>
+  <span data-i18n="hero.education2">TED Üniversitesi, Bilgisayar Mühendisliği (2019–2024)</span>
+</span>
       </p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="mailto:bilgeoyar01@gmail.com">
