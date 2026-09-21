@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+<script>document.documentElement.classList.add('js');</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-i18n="meta.title">Ceren Bilge Oyar — Full Stack Geliştirici</title>
@@ -18,9 +19,9 @@
     --ink-faint:#8B94A0;
     --line:#DBE1DC;
     --line-strong:#C2CAC4;
-    --accent-dev:#2B6E63;
-    --accent-community:#A15F22;
-    --accent-personal:#6B4A8A;
+    --accent-dev:#0E9C73;
+    --accent-community:#E07B12;
+    --accent-personal:#7C3AED;
     --accent:var(--accent-dev);
     --nav-h:68px;
     --serif:"Fraunces", Georgia, serif;
@@ -43,8 +44,10 @@
     content:"";
     position:fixed; inset:0; z-index:-2;
     background:
-      radial-gradient(1100px 760px at 90% -8%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 62%),
-      radial-gradient(900px 640px at -8% 105%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 58%);
+      radial-gradient(1100px 760px at 92% -10%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 60%),
+      radial-gradient(800px 640px at -10% 8%, color-mix(in srgb, var(--accent-personal) 16%, transparent), transparent 55%),
+      radial-gradient(1000px 720px at 50% 118%, color-mix(in srgb, var(--accent-community) 14%, transparent), transparent 60%),
+      radial-gradient(700px 560px at 100% 60%, color-mix(in srgb, var(--accent-dev) 10%, transparent), transparent 55%);
     transition:background 0.7s ease;
     pointer-events:none;
   }
@@ -149,6 +152,8 @@
   h1.hero-name{
     font-family:var(--serif); font-weight:480; font-size:clamp(2.6rem, 6vw, 4.4rem);
     line-height:1.04; margin:0 0 22px; letter-spacing:-0.01em; max-width:14ch;
+    background:linear-gradient(100deg, var(--ink) 25%, var(--accent-dev) 62%, var(--accent-personal) 88%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
   }
   .hero-lede{
     font-size:1.14rem; color:var(--ink-soft); max-width:56ch; margin:0 0 18px;
@@ -165,12 +170,12 @@
     display:inline-flex; align-items:center; gap:9px;
     font-family:var(--sans); font-weight:600; font-size:0.95rem;
     padding:12px 22px; border-radius:8px; text-decoration:none;
-    transition:transform .15s ease, box-shadow .15s ease;
+    transition:transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, border-color .2s ease;
   }
   .btn-primary{background:var(--ink); color:var(--paper);}
-  .btn-primary:hover{transform:translateY(-1px);}
+  .btn-primary:hover{transform:translateY(-2px) scale(1.02); box-shadow:0 10px 22px -10px rgba(23,27,34,0.45);}
   .btn-ghost{border:1px solid var(--line-strong); color:var(--ink);}
-  .btn-ghost:hover{border-color:var(--ink); }
+  .btn-ghost:hover{border-color:var(--accent-dev); color:var(--accent-dev); transform:translateY(-2px);}
   .btn svg{width:17px; height:17px;}
 
   .facets{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:10px 28px;}
@@ -228,7 +233,7 @@
     padding:10px 20px; border-radius:999px; white-space:nowrap;
     transition:transform .15s ease, box-shadow .15s ease;
   }
-  .service-link:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(43,110,99,0.28);}
+  .service-link:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(14,156,115,0.28);}
   .service-link svg{width:13px; height:13px;}
   @media (max-width:640px){
     .service-note{margin-top:-8px; padding:22px 20px;}
@@ -241,6 +246,12 @@
     background:#F4F3EF;
     background:color-mix(in srgb, var(--gc, var(--accent-dev)) 6%, var(--surface));
     border:1px solid color-mix(in srgb, var(--gc, var(--accent-dev)) 22%, var(--line-strong));
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease, border-color .25s ease;
+  }
+  .skill-group:hover{
+    transform:translateY(-3px);
+    border-color:color-mix(in srgb, var(--gc, var(--accent-dev)) 45%, var(--line-strong));
+    box-shadow:0 14px 26px -16px color-mix(in srgb, var(--gc, var(--accent-dev)) 55%, transparent);
   }
   .skill-group h3{
     display:flex; align-items:center; gap:8px;
@@ -252,18 +263,23 @@
     content:""; width:9px; height:9px; border-radius:3px; flex:none;
     background:var(--gc, var(--accent-dev));
   }
-  .skill-group.g-backend{--gc:#2B6E63;}
-  .skill-group.g-frontend{--gc:#3B5B7D;}
-  .skill-group.g-db{--gc:#6B4A8A;}
-  .skill-group.g-tools{--gc:#A15F22;}
-  .skill-group.g-concepts{--gc:#9C4B4B;}
-  .skill-group.g-methods{--gc:#6B7A3A;}
+  .skill-group.g-backend{--gc:#0E9C73;}
+  .skill-group.g-frontend{--gc:#2563EB;}
+  .skill-group.g-db{--gc:#7C3AED;}
+  .skill-group.g-tools{--gc:#E07B12;}
+  .skill-group.g-concepts{--gc:#E11D48;}
+  .skill-group.g-methods{--gc:#65A30D;}
   .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
   .chip{
     font-size:0.86rem; padding:6px 12px; border-radius:6px;
     border:1px solid color-mix(in srgb, var(--gc, var(--accent-dev)) 32%, var(--line-strong));
     background:color-mix(in srgb, var(--gc, var(--accent-dev)) 10%, var(--surface));
     color:var(--ink);
+    transition:transform .15s ease, background-color .15s ease;
+  }
+  .chip:hover{
+    transform:translateY(-2px);
+    background:color-mix(in srgb, var(--gc, var(--accent-dev)) 20%, var(--surface));
   }
 
   /* Experience timeline */
@@ -291,14 +307,19 @@
     border:1px solid var(--line-strong); background:var(--surface); border-radius:10px;
     border-top:4px solid var(--pc, var(--accent-dev));
     padding:24px 24px 22px;
+    transition:transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s ease;
+  }
+  .project-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 32px -14px color-mix(in srgb, var(--pc, var(--accent-dev)) 45%, transparent);
   }
   .project-card h4{font-family:var(--serif); font-size:1.16rem; font-weight:560; margin:0 0 10px; color:color-mix(in srgb, var(--pc, var(--accent-dev)) 80%, var(--ink));}
   .project-card p{color:var(--ink-soft); font-size:0.95rem; margin:0 0 16px;}
-  .project-card.p-c1{--pc:#2B6E63;}
-  .project-card.p-c2{--pc:#6B7A3A;}
-  .project-card.p-c3{--pc:#3B5B7D;}
-  .project-card.p-c4{--pc:#9C4B4B;}
-  .project-card.p-c5{--pc:#6B4A8A;}
+  .project-card.p-c1{--pc:#0E9C73;}
+  .project-card.p-c2{--pc:#65A30D;}
+  .project-card.p-c3{--pc:#2563EB;}
+  .project-card.p-c4{--pc:#E11D48;}
+  .project-card.p-c5{--pc:#7C3AED;}
   .tag-row{display:flex; flex-wrap:wrap; gap:6px 10px; font-size:0.8rem; color:var(--ink-faint);}
   .tag-row span::after{content:"·"; margin-left:10px; color:var(--line-strong);}
   .tag-row span:last-child::after{content:"";}
@@ -318,6 +339,11 @@
     display:flex; gap:18px; align-items:flex-start; max-width:72ch;
     border:1px solid var(--line-strong); background:var(--surface); border-radius:10px;
     padding:24px 26px; margin-bottom:76px;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease;
+  }
+  .conf-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 30px -16px color-mix(in srgb, var(--accent-dev) 45%, transparent);
   }
   .conf-icon{
     flex:none; width:40px; height:40px; border-radius:50%;
@@ -332,6 +358,11 @@
   .org-card{
     border:1px solid var(--line-strong); background:var(--surface); border-radius:12px;
     padding:36px 36px 32px; margin-bottom:36px;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease;
+  }
+  .org-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 36px -18px color-mix(in srgb, var(--accent-community) 40%, transparent);
   }
   .org-head{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:6px;}
   .org-name{font-family:var(--serif); font-size:1.4rem; font-weight:560;}
@@ -339,7 +370,7 @@
   .org-location{font-size:0.88rem; color:var(--ink-faint); margin-bottom:18px;}
   .org-desc{color:var(--ink-soft); max-width:64ch; margin-bottom:28px;}
   .stat-row{display:grid; grid-template-columns:repeat(4, 1fr); gap:18px; margin-bottom:26px;}
-  .stat-num{font-family:var(--serif); font-size:1.7rem; font-weight:560; color:var(--accent-community);}
+  .stat-num{font-family:var(--serif); font-size:1.85rem; font-weight:620; color:var(--accent-community); font-variant-numeric:tabular-nums;}
   .stat-label{font-size:0.8rem; color:var(--ink-soft); margin-top:2px;}
   .org-link{
     display:inline-flex; align-items:center; gap:7px; font-weight:600; font-size:0.92rem;
@@ -359,6 +390,11 @@
   .personal-card{
     border:1px solid var(--line-strong); background:var(--surface); border-radius:10px;
     padding:26px 24px;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease;
+  }
+  .personal-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 30px -16px color-mix(in srgb, var(--accent-personal) 45%, transparent);
   }
   .personal-icon{width:30px; height:30px; margin-bottom:16px; color:var(--accent-personal);}
   .personal-card h3{font-family:var(--serif); font-size:1.1rem; font-weight:560; margin:0 0 10px;}
@@ -381,9 +417,9 @@
   .icon-link{
     width:44px; height:44px; border-radius:50%; border:1px solid var(--line-strong);
     display:flex; align-items:center; justify-content:center; text-decoration:none; color:var(--ink);
-    transition:border-color .2s ease, background-color .2s ease;
+    transition:border-color .2s ease, background-color .2s ease, transform .2s cubic-bezier(.2,.8,.2,1), color .2s ease;
   }
-  .icon-link:hover{border-color:var(--ink); background:var(--surface);}
+  .icon-link:hover{border-color:var(--accent-dev); color:var(--accent-dev); background:var(--surface); transform:translateY(-3px) rotate(-4deg);}
   .icon-link svg{width:19px; height:19px;}
   .footer-bottom{
     display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
@@ -413,9 +449,32 @@
     .hero{padding-top:calc(var(--nav-h) + 48px); padding-bottom:56px;}
   }
 
+  /* Scroll-reveal */
+  .js .reveal{opacity:0; translate:0 20px; transition:opacity .65s cubic-bezier(.2,.7,.2,1), translate .65s cubic-bezier(.2,.7,.2,1);}
+  .js .reveal.is-visible{opacity:1; translate:0 0;}
+  .skills-grid .skill-group:nth-child(1){transition-delay:0s;}
+  .skills-grid .skill-group:nth-child(2){transition-delay:.06s;}
+  .skills-grid .skill-group:nth-child(3){transition-delay:.12s;}
+  .skills-grid .skill-group:nth-child(4){transition-delay:.06s;}
+  .skills-grid .skill-group:nth-child(5){transition-delay:.12s;}
+  .skills-grid .skill-group:nth-child(6){transition-delay:.18s;}
+  .project-grid .project-card:nth-child(1){transition-delay:0s;}
+  .project-grid .project-card:nth-child(2){transition-delay:.07s;}
+  .project-grid .project-card:nth-child(3){transition-delay:0s;}
+  .project-grid .project-card:nth-child(4){transition-delay:.07s;}
+  .project-grid .project-card:nth-child(5){transition-delay:0s;}
+  .personal-grid .personal-card:nth-child(2){transition-delay:.08s;}
+  .timeline li:nth-child(1){transition-delay:0s;}
+  .timeline li:nth-child(2){transition-delay:.08s;}
+  .timeline li:nth-child(3){transition-delay:.16s;}
+  .timeline li:nth-child(4){transition-delay:.24s;}
+  .timeline li:nth-child(5){transition-delay:.32s;}
+  .timeline li:nth-child(6){transition-delay:.4s;}
+
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     *{transition-duration:0.01ms !important;}
+    .js .reveal{opacity:1; translate:0;}
   }
 </style>
 </head>
@@ -554,7 +613,7 @@
 
       <h3 class="subhead" data-i18n="dev.skillsHeading">Teknik Beceriler</h3>
       <div class="skills-grid">
-        <div class="skill-group g-backend">
+        <div class="skill-group g-backend reveal">
           <h3 data-i18n="dev.group.backend">Backend</h3>
           <div class="chip-row">
             <span class="chip">C#</span><span class="chip">.NET Core</span><span class="chip">.NET</span>
@@ -562,31 +621,31 @@
             <span class="chip">RESTful APIs</span><span class="chip">SOAP</span>
           </div>
         </div>
-        <div class="skill-group g-frontend">
+        <div class="skill-group g-frontend reveal">
           <h3 data-i18n="dev.group.frontend">Frontend</h3>
           <div class="chip-row">
             <span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">JavaScript</span>
           </div>
         </div>
-        <div class="skill-group g-db">
+        <div class="skill-group g-db reveal">
           <h3 data-i18n="dev.group.db">Veritabanları</h3>
           <div class="chip-row">
             <span class="chip">SQL Server</span><span class="chip">MySQL</span><span class="chip">MongoDB</span>
           </div>
         </div>
-        <div class="skill-group g-tools">
+        <div class="skill-group g-tools reveal">
           <h3 data-i18n="dev.group.tools">Araçlar &amp; Platformlar</h3>
           <div class="chip-row">
             <span class="chip">Git</span><span class="chip">Postman</span><span class="chip">TFS</span><span class="chip">Firebase</span>
           </div>
         </div>
-        <div class="skill-group g-concepts">
+        <div class="skill-group g-concepts reveal">
           <h3 data-i18n="dev.group.concepts">Kavramlar &amp; Pratikler</h3>
           <div class="chip-row">
             <span class="chip">OOP</span><span class="chip">Design Patterns</span><span class="chip">API Integration</span><span class="chip">Database Optimization</span>
           </div>
         </div>
-        <div class="skill-group g-methods">
+        <div class="skill-group g-methods reveal">
           <h3 data-i18n="dev.group.methods">Metodolojiler</h3>
           <div class="chip-row">
             <span class="chip">Agile</span><span class="chip">Scrum</span>
@@ -596,25 +655,25 @@
 
       <h3 class="subhead" data-i18n="dev.experienceHeading">Deneyim</h3>
       <ol class="timeline">
-        <li>
+        <li class="reveal">
           <div class="tl-date" data-i18n="exp1.date">09.2023 – Devam ediyor</div>
           <div class="tl-role">Full Stack Developer</div>
           <div class="tl-company" data-i18n="exp1.company">LST Yazılım · Ankara, Türkiye</div>
           <p class="tl-desc" data-i18n="exp1.desc">Türkiye'deki tüm şirketlerin kaydını yöneten ulusal platform MERSİS üzerinde çalışıyorum. ASP.NET MVC ve Entity Framework ile geliştirdiğim backend servislerini SQL optimizasyonuyla hızlandırıyor, MongoDB ile ölçeklendiriyor ve SOAP/REST servisleriyle diğer kamu sistemlerine bağlıyorum.</p>
         </li>
-        <li>
+        <li class="reveal">
           <div class="tl-date" data-i18n="exp2.date">06.2023 – 09.2023</div>
           <div class="tl-role" data-i18n="exp2.role">Erasmus+ Stajı</div>
           <div class="tl-company" data-i18n="exp2.company">IAFA · Braga, Portekiz</div>
           <p class="tl-desc" data-i18n="exp2.desc">Portekiz'de uluslararası bir ekip içinde staj yaparak farklı bir çalışma kültüründe deneyim kazandım.</p>
         </li>
-        <li>
+        <li class="reveal">
           <div class="tl-date" data-i18n="exp3.date">06.2022 – 09.2022</div>
           <div class="tl-role" data-i18n="exp3.role">Yaz Stajı — Unity Geliştirici</div>
           <div class="tl-company">IM Park</div>
           <p class="tl-desc" data-i18n="exp3.desc">Unity ve C# ile arayüz bileşenlerinden etkileşimli oyun öğelerine uzanan bir geliştirme sürecinde yer aldım.</p>
         </li>
-        <li>
+        <li class="reveal">
           <div class="tl-date" data-i18n="exp4.date">10.2021 – 03.2022</div>
           <div class="tl-role" data-i18n="exp4.role">Öğretim Asistanı</div>
           <div class="tl-company" data-i18n="exp4.company">TED Üniversitesi · Ankara, Türkiye</div>
@@ -624,27 +683,27 @@
 
       <h3 class="subhead" data-i18n="dev.projectsHeading">Projeler</h3>
       <div class="project-grid">
-        <div class="project-card p-c1">
+        <div class="project-card p-c1 reveal">
           <h4 data-i18n="proj1.title">Görev Yönetim Sistemi</h4>
           <p data-i18n="proj1.desc">Rol tabanlı yetkilendirme ile çalışan görevlerinin yönetildiği katmanlı bir backend mimarisi. Admin/Kullanıcı rolleri için tam CRUD işlemleri ve Postman ile test edilmiş REST uç noktaları içeriyor.</p>
           <div class="tag-row"><span>ASP.NET Core</span><span>EF Core</span><span>SQL Server</span><span>REST API</span></div>
         </div>
-        <div class="project-card p-c2">
+        <div class="project-card p-c2 reveal">
           <h4>EcoFriends</h4>
           <p data-i18n="proj2.desc">Sürdürülebilir davranışları teşvik eden oyunlaştırılmış bir mobil uygulama. Puan/ödül sistemi, geri dönüşüm takibi ve görüntü işleme ile malzeme tarama içeriyor; 4 kişilik bir Agile ekipte geliştirildi.</p>
           <div class="tag-row"><span>Cross-platform</span><span>REST API</span><span>Image Processing</span></div>
         </div>
-        <div class="project-card p-c3">
+        <div class="project-card p-c3 reveal">
           <h4 data-i18n="proj3.title">Ofis Nabzı</h4>
           <p data-i18n="proj3.desc">İş yerinde anonim geri bildirim için gerçek zamanlı bir mesajlaşma platformu. Firestore'un onSnapshot dinleyicileriyle anlık güncellemeler, emoji tepkileri ve localStorage tabanlı anonim kimlik yönetimi içeriyor.</p>
           <div class="tag-row"><span>Firebase</span><span>Firestore</span><span>Realtime Database</span><span>JavaScript</span></div>
         </div>
-        <div class="project-card p-c4">
+        <div class="project-card p-c4 reveal">
           <h4>Nefis Tatlılar</h4>
           <p data-i18n="proj4.desc">3D kitap animasyonlu, malzeme eşleştirmeye dayalı bir tarif keşif uygulaması. Kullanıcının girdiği malzemelere göre tarifleri puanlayıp sıralayan bir algoritma ve tam dinamik bir içerik motoru içeriyor.</p>
           <div class="tag-row"><span>HTML</span><span>CSS3</span><span>JavaScript</span><span>CSS 3D</span></div>
         </div>
-        <div class="project-card p-c5">
+        <div class="project-card p-c5 reveal">
           <h4>Yıldız Haritam</h4>
           <p data-i18n="proj5.desc">Doğum tarihi, saati ve yerine göre natal harita ve burç uyumu (sinastri) analizi üreten bağımsız bir web uygulaması. Gezegen konumlarını gösteren interaktif bir SVG zodyak çarkı ve iki haritayı karşılaştıran bir sinastri modülü içeriyor.</p>
           <div class="tag-row"><span>SVG</span><span>Astronomical Calculations</span><span>JavaScript</span></div>
@@ -687,7 +746,7 @@
       </div>
 
       <h3 class="subhead" data-i18n="dev.confHeading">Konferans &amp; Sunumlar</h3>
-      <div class="conf-card">
+      <div class="conf-card reveal">
         <span class="conf-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
         </span>
@@ -705,7 +764,7 @@
       <p class="eyebrow" data-i18n="community.eyebrow">Topluluk Liderliği</p>
       <h2 class="section-headline" data-i18n="community.headline">Bir gençlik derneğine başkanlık ediyorum.</h2>
 
-      <div class="org-card">
+      <div class="org-card reveal">
         <div class="org-head">
           <div class="org-name">Bilge Gençlik Eğitim Derneği</div>
           <div class="org-role" data-i18n="community.role">Kurucu &amp; Başkan</div>
@@ -713,10 +772,10 @@
         <div class="org-location">Kızılcahamam, Ankara</div>
         <p class="org-desc" data-i18n="community.desc">Bilge Gençlik Eğitim Derneği (BİLGED), Ankara'nın Kızılcahamam ilçesinde gençlerin kişisel ve mesleki gelişimini destekliyor. Eğitim, kültür-sanat, çevre ve gönüllülük alanlarında yürüttüğümüz projelerle gençlere uluslararası deneyim kazandırıyor, öğrenme ve üretme alanı açıyoruz.</p>
         <div class="stat-row">
-          <div><div class="stat-num">10+</div><div class="stat-label" data-i18n="community.stat1">Proje</div></div>
-          <div><div class="stat-num">20+</div><div class="stat-label" data-i18n="community.stat2">Ülke İşbirliği</div></div>
-          <div><div class="stat-num">300+</div><div class="stat-label" data-i18n="community.stat3">Katılımcı</div></div>
-          <div><div class="stat-num">80+</div><div class="stat-label" data-i18n="community.stat4">Gönüllü</div></div>
+          <div><div class="stat-num" data-count-to="10">0+</div><div class="stat-label" data-i18n="community.stat1">Proje</div></div>
+          <div><div class="stat-num" data-count-to="20">0+</div><div class="stat-label" data-i18n="community.stat2">Ülke İşbirliği</div></div>
+          <div><div class="stat-num" data-count-to="300">0+</div><div class="stat-label" data-i18n="community.stat3">Katılımcı</div></div>
+          <div><div class="stat-num" data-count-to="80">0+</div><div class="stat-label" data-i18n="community.stat4">Gönüllü</div></div>
         </div>
         <a class="org-link" href="https://bilgegenclik.org" target="_blank" rel="noopener">
           <span data-i18n="community.link">Derneği ziyaret et</span>
@@ -726,36 +785,36 @@
 
       <h3 class="subhead" data-i18n="community.journeyHeading">Uluslararası Deneyim</h3>
       <ol class="timeline">
-        <li>
+        <li class="reveal">
           <div class="tl-date">2016 – 2018</div>
           <div class="tl-role" data-i18n="comm1.role">Avrupa Gençlik Kampı</div>
           <p class="tl-desc" data-i18n="comm1.desc">2016 ile 2018 arasında üç yıl üst üste katıldığım uluslararası yaz kamplarında farklı ülkelerden gençlerle bir araya geldim.</p>
         </li>
-        <li>
+        <li class="reveal">
           <div class="tl-date">2019</div>
           <div class="tl-role" data-i18n="comm2.role">İlk Erasmus+ deneyimim (KA152)</div>
           <div class="tl-company">iCITIZEN · Palermo, İtalya</div>
           <p class="tl-desc" data-i18n="comm2.desc">Sosyal medyada siyasi aşırılığı önlemeye yönelik bir vatandaşlık eğitimi ve medya okuryazarlığı projesine katıldım.</p>
         </li>
-        <li>
+        <li class="reveal">
           <div class="tl-date">2021</div>
           <div class="tl-role" data-i18n="comm3.role">Erasmus+ Youthpass</div>
           <div class="tl-company">Digital Youth at Your Best · Ankara, Türkiye</div>
           <p class="tl-desc" data-i18n="comm3.desc">Gençlik çalışanlarının hareketliliğine yönelik bir Erasmus+ programına katıldım.</p>
         </li>
-        <li>
+        <li class="reveal">
           <div class="tl-date" data-i18n="comm4.date">2021 · Aralık</div>
           <div class="tl-role" data-i18n="comm4.role">Birleşmiş Milletler — İdari Personel</div>
           <div class="tl-company">TED Üniversitesi · Ankara</div>
           <p class="tl-desc" data-i18n="comm4.desc">TED Üniversitesi'nde düzenlenen bir Birleşmiş Milletler etkinliğinde idari ekipte görev aldım.</p>
         </li>
-        <li>
+        <li class="reveal">
           <div class="tl-date">06.2023 – 09.2023</div>
           <div class="tl-role" data-i18n="comm5.role">Erasmus+ Stajı</div>
           <div class="tl-company">IAFA · Braga, Portekiz</div>
           <p class="tl-desc" data-i18n="comm5.desc">Portekiz'de uluslararası bir ekip içinde staj yaparak farklı bir çalışma kültüründe deneyim kazandım.</p>
         </li>
-        <li>
+        <li class="reveal">
           <div class="tl-date" data-i18n="comm6.date">2023 · Eylül</div>
           <div class="tl-role" data-i18n="comm6.role">Bilge Gençlik Eğitim Derneği'ni kurdum</div>
           <div class="tl-company">Kızılcahamam, Ankara</div>
@@ -772,7 +831,7 @@
       <h2 class="section-headline" data-i18n="personal.headline">Ekranın dışında da üretmeyi seviyorum.</h2>
 
       <div class="personal-grid">
-        <div class="personal-card">
+        <div class="personal-card reveal">
           <svg class="personal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8c0-2.2 3.1-4 7-4s7 1.8 7 4"/><path d="M5 8v9c0 1.7 3.1 3 7 3s7-1.3 7-3V8"/><path d="M5 12.5c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>
           <h3 data-i18n="personal.langHeading">Diller</h3>
           <div class="lang-line">
@@ -788,7 +847,7 @@
           <p class="lang-note" data-i18n="personal.langNote">Frances King School of English, Dublin (2016) — kurs tamamlama sertifikası.</p>
         </div>
 
-        <div class="personal-card">
+        <div class="personal-card reveal">
           <svg class="personal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9"/><path d="M3 17h18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Z"/><path d="M7 10v3M10.5 10v4M14 10v3M17.5 10v4"/></svg>
           <h3 data-i18n="personal.pianoHeading">Piyano</h3>
           <p data-i18n="personal.pianoDesc">University of West London — London College of Music (LCM) sınavlarından Pianoforte Grade 1 ve Grade 3 sertifikalarına sahibim.</p>
@@ -1169,6 +1228,46 @@
       updateTargets();
       ensureLoop();
     });
+  }
+
+  // Scroll-reveal for cards and timeline items
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && revealEls.length){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    revealEls.forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  // Count-up animation for community stats
+  var countEls = document.querySelectorAll('[data-count-to]');
+  if ('IntersectionObserver' in window && countEls.length){
+    var countObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        countObserver.unobserve(el);
+        var target = parseInt(el.getAttribute('data-count-to'), 10);
+        var duration = 1100;
+        var start = null;
+        function step(ts){
+          if (start === null) start = ts;
+          var progress = Math.min((ts - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(eased * target) + '+';
+          if (progress < 1){ requestAnimationFrame(step); }
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.4 });
+    countEls.forEach(function(el){ countObserver.observe(el); });
   }
 })();
 </script>
