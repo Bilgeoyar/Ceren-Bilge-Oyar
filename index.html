@@ -127,9 +127,12 @@
   }
   .hero-graphic{
     position:absolute; top:8%; right:-6%; width:46%; min-width:340px;
-    opacity:0.55; pointer-events:none;
+    opacity:0.55; cursor:default;
   }
-  .hero-inner{position:relative; z-index:1;}
+  .hero-graphic-hit{pointer-events:all;}
+  #heroNodes circle{transition:r .25s ease;}
+  .hero-inner{position:relative; z-index:1; pointer-events:none;}
+  .hero-inner .hero-actions a, .hero-inner .facets a{pointer-events:auto;}
   .hero-avatar{
     width:88px; height:88px; border-radius:50%; overflow:hidden;
     background:var(--ink); color:var(--paper);
@@ -442,30 +445,31 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="top">
-    <svg class="hero-graphic" viewBox="0 0 420 420" aria-hidden="true">
-      <g fill="none" stroke="#171B22" stroke-width="1">
-        <line x1="40" y1="60" x2="150" y2="30" />
-        <line x1="150" y1="30" x2="260" y2="90" />
-        <line x1="150" y1="30" x2="120" y2="150" />
-        <line x1="260" y1="90" x2="380" y2="70" />
-        <line x1="260" y1="90" x2="300" y2="210" />
-        <line x1="120" y1="150" x2="60" y2="250" />
-        <line x1="120" y1="150" x2="220" y2="230" />
-        <line x1="220" y1="230" x2="300" y2="210" />
-        <line x1="220" y1="230" x2="180" y2="340" />
-        <line x1="300" y1="210" x2="360" y2="310" />
+    <svg class="hero-graphic" id="heroGraphic" viewBox="0 0 420 420" aria-hidden="true">
+      <rect class="hero-graphic-hit" x="0" y="0" width="420" height="420" fill="transparent"></rect>
+      <g id="heroLines" fill="none" stroke="#171B22" stroke-width="1">
+        <line data-a="0" data-b="1" x1="40" y1="60" x2="150" y2="30" />
+        <line data-a="1" data-b="2" x1="150" y1="30" x2="260" y2="90" />
+        <line data-a="1" data-b="4" x1="150" y1="30" x2="120" y2="150" />
+        <line data-a="2" data-b="3" x1="260" y1="90" x2="380" y2="70" />
+        <line data-a="2" data-b="5" x1="260" y1="90" x2="300" y2="210" />
+        <line data-a="4" data-b="6" x1="120" y1="150" x2="60" y2="250" />
+        <line data-a="4" data-b="7" x1="120" y1="150" x2="220" y2="230" />
+        <line data-a="7" data-b="5" x1="220" y1="230" x2="300" y2="210" />
+        <line data-a="7" data-b="8" x1="220" y1="230" x2="180" y2="340" />
+        <line data-a="5" data-b="9" x1="300" y1="210" x2="360" y2="310" />
       </g>
-      <g fill="#171B22">
-        <circle cx="40" cy="60" r="3.5"/>
-        <circle cx="150" cy="30" r="4.5"/>
-        <circle cx="260" cy="90" r="3.5"/>
-        <circle cx="380" cy="70" r="3.5"/>
-        <circle cx="120" cy="150" r="4.5"/>
-        <circle cx="300" cy="210" r="4.5"/>
-        <circle cx="60" cy="250" r="3.5"/>
-        <circle cx="220" cy="230" r="4.5"/>
-        <circle cx="180" cy="340" r="3.5"/>
-        <circle cx="360" cy="310" r="3.5"/>
+      <g id="heroNodes" fill="#171B22">
+        <circle data-id="0" cx="40" cy="60" r="3.5"/>
+        <circle data-id="1" cx="150" cy="30" r="4.5"/>
+        <circle data-id="2" cx="260" cy="90" r="3.5"/>
+        <circle data-id="3" cx="380" cy="70" r="3.5"/>
+        <circle data-id="4" cx="120" cy="150" r="4.5"/>
+        <circle data-id="5" cx="300" cy="210" r="4.5"/>
+        <circle data-id="6" cx="60" cy="250" r="3.5"/>
+        <circle data-id="7" cx="220" cy="230" r="4.5"/>
+        <circle data-id="8" cx="180" cy="340" r="3.5"/>
+        <circle data-id="9" cx="360" cy="310" r="3.5"/>
       </g>
     </svg>
 
@@ -1082,6 +1086,89 @@
     }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
 
     sections.forEach(function(sec){ observer.observe(sec); });
+  }
+
+  // Interactive constellation: lines/nodes drift toward the cursor on hover
+  var graphicSvg = document.getElementById('heroGraphic');
+  if (graphicSvg && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var nodeEls = Array.prototype.slice.call(document.querySelectorAll('#heroNodes circle'));
+    var lineEls = Array.prototype.slice.call(document.querySelectorAll('#heroLines line'));
+
+    var nodes = nodeEls.map(function(el){
+      var baseX = parseFloat(el.getAttribute('cx'));
+      var baseY = parseFloat(el.getAttribute('cy'));
+      return {
+        el: el,
+        baseX: baseX, baseY: baseY,
+        x: baseX, y: baseY,
+        targetX: baseX, targetY: baseY,
+        weight: 0.5 + Math.random() * 0.9
+      };
+    });
+
+    var pointerX = 210, pointerY = 210, active = false, rafId = null;
+    var MAX_SHIFT = 20;
+
+    function updateTargets(){
+      var dx = (pointerX - 210) / 210;
+      var dy = (pointerY - 210) / 210;
+      nodes.forEach(function(n){
+        if (active){
+          n.targetX = n.baseX + dx * MAX_SHIFT * n.weight;
+          n.targetY = n.baseY + dy * MAX_SHIFT * n.weight;
+        } else {
+          n.targetX = n.baseX;
+          n.targetY = n.baseY;
+        }
+      });
+    }
+
+    function tick(){
+      var stillMoving = false;
+      nodes.forEach(function(n){
+        var dx = n.targetX - n.x;
+        var dy = n.targetY - n.y;
+        if (Math.abs(dx) > 0.02 || Math.abs(dy) > 0.02){
+          stillMoving = true;
+          n.x += dx * 0.09;
+          n.y += dy * 0.09;
+        } else {
+          n.x = n.targetX;
+          n.y = n.targetY;
+        }
+        n.el.setAttribute('cx', n.x);
+        n.el.setAttribute('cy', n.y);
+      });
+      lineEls.forEach(function(line){
+        var a = nodes[parseInt(line.getAttribute('data-a'), 10)];
+        var b = nodes[parseInt(line.getAttribute('data-b'), 10)];
+        line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+        line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+      });
+      if (stillMoving || active){
+        rafId = requestAnimationFrame(tick);
+      } else {
+        rafId = null;
+      }
+    }
+
+    function ensureLoop(){
+      if (rafId === null){ rafId = requestAnimationFrame(tick); }
+    }
+
+    graphicSvg.addEventListener('mouseenter', function(){ active = true; ensureLoop(); });
+    graphicSvg.addEventListener('mousemove', function(e){
+      var rect = graphicSvg.getBoundingClientRect();
+      pointerX = ((e.clientX - rect.left) / rect.width) * 420;
+      pointerY = ((e.clientY - rect.top) / rect.height) * 420;
+      updateTargets();
+      ensureLoop();
+    });
+    graphicSvg.addEventListener('mouseleave', function(){
+      active = false;
+      updateTargets();
+      ensureLoop();
+    });
   }
 })();
 </script>
