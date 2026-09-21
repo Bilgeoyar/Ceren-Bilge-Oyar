@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="meta.title">Ceren Bilge Oyar — Full Stack Geliştirici</title>
+<meta name="description" content="Ceren Bilge Oyar — Full Stack Developer, Bilge Gençlik Eğitim Derneği Başkanı, piyanist ve voleybolcu.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23171B22'/%3E%3Cpath d='M20 20 L20 44 M20 32 L36 32 M20 20 L36 20 Q44 20 44 26 Q44 32 36 32' fill='none' stroke='%23EEF1EC' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,480;0,9..144,560;1,9..144,420&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDF0EB;
+    --surface:#FBFCFA;
+    --ink:#171B22;
+    --ink-soft:#57606B;
+    --ink-faint:#8B94A0;
+    --line:#DBE1DC;
+    --line-strong:#C2CAC4;
+    --accent-dev:#2B6E63;
+    --accent-community:#A15F22;
+    --accent-personal:#6B4A8A;
+    --accent:var(--accent-dev);
+    --nav-h:68px;
+    --serif:"Fraunces", Georgia, serif;
+    --sans:"Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:calc(var(--nav-h) + 18px);}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{max-width:100%;}
+
+  a{color:inherit;}
+  .visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+  .skip-link{position:absolute; left:12px; top:-48px; background:var(--ink); color:var(--paper); padding:10px 16px; border-radius:6px; z-index:200; transition:top .15s ease;}
+  .skip-link:focus{top:12px;}
+
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+
+  .container{max-width:1080px; margin:0 auto; padding:0 28px;}
+  .prose{max-width:640px;}
+
+  /* ---------- Nav ---------- */
+  header.site-nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    height:var(--nav-h);
+    display:flex; align-items:center;
+    background:rgba(237,240,235,0.82);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    width:100%; max-width:1080px; margin:0 auto; padding:0 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--serif); font-weight:560; font-size:1.05rem;
+    text-decoration:none; color:var(--ink); white-space:nowrap;
+  }
+  .brand-mark{
+    width:30px; height:30px; border-radius:8px; background:var(--ink);
+    color:var(--paper); display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif); font-size:0.85rem; font-weight:560; flex:none;
+  }
+  nav.pills{display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; min-width:0; flex:1 1 auto;}
+  nav.pills::-webkit-scrollbar{display:none;}
+  nav.pills a{
+    font-family:var(--sans); font-size:0.88rem; font-weight:600;
+    padding:8px 14px; border-radius:999px; text-decoration:none;
+    color:var(--ink-soft); white-space:nowrap;
+    border:1px solid transparent;
+    transition:color .2s ease, border-color .2s ease, background-color .2s ease;
+  }
+  nav.pills a.active{
+    color:var(--ink); border-color:var(--line-strong); background:var(--surface);
+  }
+  nav.pills a .dot{
+    display:inline-block; width:6px; height:6px; border-radius:50%;
+    margin-right:7px; background:currentColor; vertical-align:middle;
+  }
+  nav.pills a[href="#developer"] .dot{background:var(--accent-dev); }
+  nav.pills a[href="#community"] .dot{background:var(--accent-community); }
+  nav.pills a[href="#personal"] .dot{background:var(--accent-personal); }
+
+  .lang-toggle{display:flex; border:1px solid var(--line-strong); border-radius:999px; padding:2px; flex:none;}
+  .lang-toggle button{
+    border:none; background:transparent; font-family:var(--sans); font-weight:700;
+    font-size:0.78rem; letter-spacing:.03em; padding:6px 11px; border-radius:999px;
+    color:var(--ink-soft); cursor:pointer; transition:background-color .2s ease, color .2s ease;
+  }
+  .lang-toggle button.active{background:var(--ink); color:var(--paper);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:calc(var(--nav-h) + 76px) 0 84px;
+    overflow:hidden;
+  }
+  .hero-graphic{
+    position:absolute; top:8%; right:-6%; width:46%; min-width:340px;
+    opacity:0.55; pointer-events:none;
+  }
+  .hero-inner{position:relative; z-index:1;}
+  .hero-kicker{
+    font-family:var(--sans); font-weight:600; font-size:0.95rem;
+    color:var(--accent-dev); margin:0 0 14px;
+  }
+  h1.hero-name{
+    font-family:var(--serif); font-weight:480; font-size:clamp(2.6rem, 6vw, 4.4rem);
+    line-height:1.04; margin:0 0 22px; letter-spacing:-0.01em; max-width:14ch;
+  }
+  .hero-lede{
+    font-size:1.14rem; color:var(--ink-soft); max-width:56ch; margin:0 0 30px;
+  }
+  .hero-actions{display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-bottom:44px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:9px;
+    font-family:var(--sans); font-weight:600; font-size:0.95rem;
+    padding:12px 22px; border-radius:8px; text-decoration:none;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary{background:var(--ink); color:var(--paper);}
+  .btn-primary:hover{transform:translateY(-1px);}
+  .btn-ghost{border:1px solid var(--line-strong); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--ink); }
+  .btn svg{width:17px; height:17px;}
+
+  .facets{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:10px 28px;}
+  .facets li{display:flex; align-items:center; gap:10px;}
+  .facets a{
+    display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink-soft);
+    font-size:0.94rem; font-weight:500; transition:color .2s ease;
+  }
+  .facets a:hover{color:var(--ink);}
+  .swatch{width:11px; height:11px; border-radius:3px; flex:none;}
+  .facets li:nth-child(1) .swatch{background:var(--accent-dev);}
+  .facets li:nth-child(2) .swatch{background:var(--accent-community);}
+  .facets li:nth-child(3) .swatch{background:var(--accent-personal);}
+
+  /* ---------- Sections ---------- */
+  .profile{padding:88px 0; border-top:1px solid var(--line); scroll-margin-top:calc(var(--nav-h) + 18px);}
+  .eyebrow{
+    display:flex; align-items:center; gap:12px;
+    font-family:var(--sans); font-weight:700; font-size:0.92rem;
+    color:var(--accent); margin:0 0 20px;
+    transition:color .3s ease;
+  }
+  .eyebrow::before{content:""; width:30px; height:2px; background:var(--accent); transition:background-color .3s ease;}
+  h2.section-headline{
+    font-family:var(--serif); font-weight:480; font-size:clamp(1.7rem, 3.4vw, 2.5rem);
+    line-height:1.16; margin:0 0 22px; max-width:18ch;
+  }
+  .section-lede{color:var(--ink-soft); max-width:62ch; font-size:1.04rem; margin:0 0 52px;}
+
+  .service-note{
+    display:flex; align-items:center; gap:16px; max-width:62ch;
+    padding:16px 20px; margin:-24px 0 52px;
+    border:1px solid var(--line-strong); border-radius:10px; background:var(--surface);
+  }
+  .service-icon{
+    flex:none; width:38px; height:38px; border-radius:50%;
+    background:var(--paper); border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center; color:var(--accent-dev);
+  }
+  .service-icon svg{width:18px; height:18px;}
+  .service-text{margin:0; font-size:0.95rem; color:var(--ink-soft);}
+  .service-link{
+    display:inline-block; margin-left:8px; font-weight:600; color:var(--ink);
+    text-decoration:none; border-bottom:1px solid var(--accent-dev); padding-bottom:1px;
+  }
+  @media (max-width:560px){
+    .service-note{flex-direction:column; align-items:flex-start; gap:10px; margin-top:-8px;}
+    .service-link{margin-left:0; display:block; margin-top:4px;}
+  }
+
+  /* Skills */
+  .skills-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:32px 48px; margin-bottom:76px;}
+  .skill-group h3{
+    font-family:var(--sans); font-size:0.86rem; font-weight:600; color:var(--ink-soft);
+    margin:0 0 12px;
+  }
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-size:0.86rem; padding:6px 12px; border-radius:6px;
+    border:1px solid var(--line-strong); background:var(--surface); color:var(--ink);
+  }
+
+  /* Experience timeline */
+  .timeline{list-style:none; margin:0 0 76px; padding:0; position:relative;}
+  .timeline::before{
+    content:""; position:absolute; left:6px; top:6px; bottom:6px; width:1px; background:var(--line-strong);
+  }
+  .timeline li{position:relative; padding:0 0 40px 34px;}
+  .timeline li:last-child{padding-bottom:0;}
+  .timeline li::before{
+    content:""; position:absolute; left:0; top:6px; width:13px; height:13px; border-radius:50%;
+    background:var(--paper); border:2px solid var(--accent-dev);
+  }
+  .tl-date{font-size:0.84rem; color:var(--ink-faint); font-weight:600; margin-bottom:6px;}
+  .tl-role{font-family:var(--serif); font-weight:560; font-size:1.18rem; margin:0 0 2px;}
+  .tl-company{font-size:0.92rem; color:var(--ink-soft); margin-bottom:10px;}
+  .tl-desc{max-width:62ch; color:var(--ink-soft); font-size:0.97rem;}
+
+  h3.subhead{font-family:var(--sans); font-size:1rem; font-weight:700; margin:0 0 26px;}
+
+  /* Projects */
+  .project-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:20px; margin-bottom:76px;}
+  .project-card{
+    border:1px solid var(--line-strong); background:var(--surface); border-radius:10px;
+    padding:24px 24px 22px;
+  }
+  .project-card h4{font-family:var(--serif); font-size:1.16rem; font-weight:560; margin:0 0 10px;}
+  .project-card p{color:var(--ink-soft); font-size:0.95rem; margin:0 0 16px;}
+  .tag-row{display:flex; flex-wrap:wrap; gap:6px 10px; font-size:0.8rem; color:var(--ink-faint);}
+  .tag-row span::after{content:"·"; margin-left:10px; color:var(--line-strong);}
+  .tag-row span:last-child::after{content:"";}
+
+  /* Education / certs */
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  .list-plain{list-style:none; margin:0; padding:0;}
+  .list-plain li{padding:16px 0; border-top:1px solid var(--line);}
+  .list-plain li:first-child{border-top:none; padding-top:0;}
+  .edu-degree{font-family:var(--serif); font-size:1.05rem; font-weight:560;}
+  .edu-school{font-size:0.92rem; color:var(--ink-soft); margin-top:2px;}
+  .edu-date{font-size:0.82rem; color:var(--ink-faint); margin-top:4px;}
+  .cert-title{font-weight:600; font-size:0.98rem;}
+  .cert-desc{font-size:0.9rem; color:var(--ink-soft); margin-top:3px;}
+
+  /* Community */
+  .org-card{
+    border:1px solid var(--line-strong); background:var(--surface); border-radius:12px;
+    padding:36px 36px 32px; margin-bottom:36px;
+  }
+  .org-head{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:6px;}
+  .org-name{font-family:var(--serif); font-size:1.4rem; font-weight:560;}
+  .org-role{font-size:0.88rem; font-weight:600; color:var(--accent-community);}
+  .org-location{font-size:0.88rem; color:var(--ink-faint); margin-bottom:18px;}
+  .org-desc{color:var(--ink-soft); max-width:64ch; margin-bottom:28px;}
+  .stat-row{display:grid; grid-template-columns:repeat(4, 1fr); gap:18px; margin-bottom:26px;}
+  .stat-num{font-family:var(--serif); font-size:1.7rem; font-weight:560; color:var(--accent-community);}
+  .stat-label{font-size:0.8rem; color:var(--ink-soft); margin-top:2px;}
+  .org-link{
+    display:inline-flex; align-items:center; gap:7px; font-weight:600; font-size:0.92rem;
+    text-decoration:none; color:var(--ink); border-bottom:1px solid var(--accent-community); padding-bottom:2px;
+  }
+  .thread{display:flex; gap:20px; align-items:flex-start;}
+  .thread-icon{
+    flex:none; width:38px; height:38px; border-radius:50%; background:var(--surface);
+    border:1px solid var(--line-strong); display:flex; align-items:center; justify-content:center;
+  }
+  .thread-icon svg{width:18px; height:18px; color:var(--accent-community);}
+  .thread-label{font-size:0.84rem; font-weight:700; color:var(--ink-soft); margin-bottom:6px;}
+  .thread-desc{color:var(--ink-soft); max-width:60ch;}
+
+  /* Personal */
+  .personal-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;}
+  .personal-card{
+    border:1px solid var(--line-strong); background:var(--surface); border-radius:10px;
+    padding:26px 24px;
+  }
+  .personal-icon{width:30px; height:30px; margin-bottom:16px; color:var(--accent-personal);}
+  .personal-card h3{font-family:var(--serif); font-size:1.1rem; font-weight:560; margin:0 0 10px;}
+  .personal-card p{color:var(--ink-soft); font-size:0.93rem; margin:0;}
+  .lang-line{display:flex; align-items:center; justify-content:space-between; margin-top:12px;}
+  .lang-line:first-of-type{margin-top:16px;}
+  .lang-name{font-size:0.92rem; font-weight:600;}
+  .lang-level{font-size:0.82rem; color:var(--ink-faint);}
+  .dots{display:flex; gap:4px; margin-top:6px;}
+  .dots span{width:7px; height:7px; border-radius:50%; background:var(--line-strong);}
+  .dots span.filled{background:var(--accent-personal);}
+
+  /* Footer */
+  footer{border-top:1px solid var(--line); padding:64px 0 40px;}
+  .footer-top{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:40px;}
+  h2.footer-headline{font-family:var(--serif); font-weight:480; font-size:clamp(1.8rem,4vw,2.7rem); margin:0 0 10px;}
+  .footer-desc{color:var(--ink-soft); max-width:44ch;}
+  .footer-links{display:flex; gap:14px;}
+  .icon-link{
+    width:44px; height:44px; border-radius:50%; border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center; text-decoration:none; color:var(--ink);
+    transition:border-color .2s ease, background-color .2s ease;
+  }
+  .icon-link:hover{border-color:var(--ink); background:var(--surface);}
+  .icon-link svg{width:19px; height:19px;}
+  .footer-bottom{
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
+    padding-top:24px; border-top:1px solid var(--line);
+    font-size:0.84rem; color:var(--ink-faint);
+  }
+
+  /* Responsive */
+  @media (max-width: 860px){
+    .skills-grid{grid-template-columns:1fr; gap:28px;}
+    .project-grid{grid-template-columns:1fr;}
+    .two-col{grid-template-columns:1fr; gap:36px;}
+    .personal-grid{grid-template-columns:1fr;}
+    .stat-row{grid-template-columns:repeat(2,1fr); row-gap:20px;}
+    .hero-graphic{display:none;}
+    .org-card{padding:26px 22px;}
+  }
+  @media (max-width: 560px){
+    .container{padding:0 20px;}
+    :root{--nav-h:108px;}
+    header.site-nav{height:auto; padding:12px 0;}
+    .nav-inner{padding:0 16px; gap:10px; flex-wrap:wrap; row-gap:10px;}
+    nav.pills{order:3; flex-basis:100%; flex-grow:0; overflow-x:visible;}
+    nav.pills a{padding:7px 12px; font-size:0.83rem;}
+    .brand span.brand-name{display:none;}
+    .profile{padding:64px 0;}
+    .hero{padding-top:calc(var(--nav-h) + 48px); padding-bottom:56px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition-duration:0.01ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main" data-i18n="a11y.skip">İçeriğe geç</a>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">CBO</span>
+      <span class="brand-name">Ceren Bilge Oyar</span>
+    </a>
+    <nav class="pills" aria-label="Bölümler">
+      <a href="#developer"><span class="dot" aria-hidden="true"></span><span data-i18n="nav.dev">Geliştirici</span></a>
+      <a href="#community"><span class="dot" aria-hidden="true"></span><span data-i18n="nav.community">Topluluk</span></a>
+      <a href="#personal"><span class="dot" aria-hidden="true"></span><span data-i18n="nav.personal">Kişisel</span></a>
+    </nav>
+    <div class="lang-toggle" role="group" aria-label="Dil seçimi">
+      <button type="button" data-lang="tr" class="active">TR</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top">
+    <svg class="hero-graphic" viewBox="0 0 420 420" aria-hidden="true">
+      <g fill="none" stroke="#171B22" stroke-width="1">
+        <line x1="40" y1="60" x2="150" y2="30" />
+        <line x1="150" y1="30" x2="260" y2="90" />
+        <line x1="150" y1="30" x2="120" y2="150" />
+        <line x1="260" y1="90" x2="380" y2="70" />
+        <line x1="260" y1="90" x2="300" y2="210" />
+        <line x1="120" y1="150" x2="60" y2="250" />
+        <line x1="120" y1="150" x2="220" y2="230" />
+        <line x1="220" y1="230" x2="300" y2="210" />
+        <line x1="220" y1="230" x2="180" y2="340" />
+        <line x1="300" y1="210" x2="360" y2="310" />
+      </g>
+      <g fill="#171B22">
+        <circle cx="40" cy="60" r="3.5"/>
+        <circle cx="150" cy="30" r="4.5"/>
+        <circle cx="260" cy="90" r="3.5"/>
+        <circle cx="380" cy="70" r="3.5"/>
+        <circle cx="120" cy="150" r="4.5"/>
+        <circle cx="300" cy="210" r="4.5"/>
+        <circle cx="60" cy="250" r="3.5"/>
+        <circle cx="220" cy="230" r="4.5"/>
+        <circle cx="180" cy="340" r="3.5"/>
+        <circle cx="360" cy="310" r="3.5"/>
+      </g>
+    </svg>
+
+    <div class="container hero-inner">
+      <p class="hero-kicker" data-i18n="hero.kicker">Full Stack Geliştirici</p>
+      <h1 class="hero-name">Ceren Bilge Oyar</h1>
+      <p class="hero-lede" data-i18n="hero.lede">
+        Ankara merkezli bir Full Stack Developer'ım; üç yıldır .NET ekosisteminde büyük ölçekli kamu sistemleri geliştiriyorum. Yazılımın yanında bir gençlik derneğine başkanlık ediyor, piyano çalıyor ve eskiden lisanslı voleybol oynuyordum.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="mailto:bilgeoyar01@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="m3.5 6 8.5 7 8.5-7"/></svg>
+          <span data-i18n="hero.ctaEmail">E-posta gönder</span>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/Bilgeoyar" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.19c0 4.49 2.87 8.3 6.84 9.65.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.46-1.19-1.11-1.51-1.11-1.51-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.55 2.34 1.1 2.91.84.09-.66.35-1.1.63-1.36-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.32 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.64 1.03 2.76 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.2 10.2 0 0 0 22 12.19C22 6.58 17.52 2 12 2Z"/></svg>
+          GitHub
+        </a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/ceren-bilge-oyar-b39936205" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002ZM7 8.48H3V21h4V8.48Zm6.32 0H9.35V21h3.94v-6.57c0-3.66 4.77-3.96 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.68-2.91V8.48Z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+
+      <ul class="facets">
+        <li><a href="#developer"><span class="swatch" aria-hidden="true"></span><span data-i18n="hero.facet.dev">Geliştirici</span></a></li>
+        <li><a href="#community"><span class="swatch" aria-hidden="true"></span><span data-i18n="hero.facet.community">Topluluk Lideri</span></a></li>
+        <li><a href="#personal"><span class="swatch" aria-hidden="true"></span><span data-i18n="hero.facet.personal">Piyanist &amp; Voleybolcu</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ DEVELOPER ============ -->
+  <section class="profile" id="developer" data-accent="dev">
+    <div class="container">
+      <p class="eyebrow" data-i18n="dev.eyebrow">Yazılım Geliştirici</p>
+      <h2 class="section-headline" data-i18n="dev.headline">Üç yıldır büyük ölçekli sistemler kuruyorum.</h2>
+      <p class="section-lede" data-i18n="dev.about">
+        .NET Core, .NET, MVC, Entity Framework, SQL ve MongoDB alanlarında üç yıllık profesyonel deneyime sahip bir Full Stack Developer'ım. Backend geliştirme ve veritabanı optimizasyonunda güçlü bir geçmişim var; HTML, CSS ve JavaScript ile frontend becerileriyle destekliyorum. Agile/Scrum ortamlarında çalışıyor, bir gençlik derneğinin başkanlığını yürütüyorum.
+      </p>
+
+      <div class="service-note">
+        <span class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="M3 9h18"/><circle cx="6.3" cy="6.75" r=".55" fill="currentColor" stroke="none"/><circle cx="8.4" cy="6.75" r=".55" fill="currentColor" stroke="none"/></svg>
+        </span>
+        <p class="service-text">
+          <span data-i18n="dev.serviceNote">Web sitesi tasarımı da yapıyorum.</span>
+          <a class="service-link" href="mailto:bilgeoyar01@gmail.com" data-i18n="dev.serviceCta">Örnek çalışmalar için ulaşabilirsiniz</a>
+        </p>
+      </div>
+
+      <h3 class="subhead" data-i18n="dev.skillsHeading">Teknik Beceriler</h3>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h3 data-i18n="dev.group.backend">Backend</h3>
+          <div class="chip-row">
+            <span class="chip">C#</span><span class="chip">.NET Core</span><span class="chip">.NET</span>
+            <span class="chip">MVC</span><span class="chip">Entity Framework</span><span class="chip">WCF</span>
+            <span class="chip">RESTful APIs</span><span class="chip">SOAP</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 data-i18n="dev.group.frontend">Frontend</h3>
+          <div class="chip-row">
+            <span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">JavaScript</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 data-i18n="dev.group.db">Veritabanları</h3>
+          <div class="chip-row">
+            <span class="chip">SQL Server</span><span class="chip">MySQL</span><span class="chip">MongoDB</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 data-i18n="dev.group.tools">Araçlar &amp; Platformlar</h3>
+          <div class="chip-row">
+            <span class="chip">Git</span><span class="chip">Postman</span><span class="chip">TFS</span><span class="chip">Firebase</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 data-i18n="dev.group.concepts">Kavramlar &amp; Pratikler</h3>
+          <div class="chip-row">
+            <span class="chip">OOP</span><span class="chip">Design Patterns</span><span class="chip">API Integration</span><span class="chip">Database Optimization</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 data-i18n="dev.group.methods">Metodolojiler</h3>
+          <div class="chip-row">
+            <span class="chip">Agile</span><span class="chip">Scrum</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="subhead" data-i18n="dev.experienceHeading">Deneyim</h3>
+      <ol class="timeline">
+        <li>
+          <div class="tl-date" data-i18n="exp1.date">09.2023 – Devam ediyor</div>
+          <div class="tl-role">Full Stack Developer</div>
+          <div class="tl-company" data-i18n="exp1.company">LST Yazılım · Ankara, Türkiye</div>
+          <p class="tl-desc" data-i18n="exp1.desc">MERSİS — Türkiye'deki tüm şirketlerin ve yabancı şirket şubelerinin kaydını yöneten ulusal platform üzerinde çalışıyorum. ASP.NET MVC ve Entity Framework ile backend servisleri geliştiriyor, SQL sorgularını optimize ediyor, MongoDB ile ölçeklenebilirliği artırıyor ve SOAP/REST servislerini diğer kamu sistemleriyle entegre ediyorum.</p>
+        </li>
+        <li>
+          <div class="tl-date" data-i18n="exp2.date">06.2023 – 09.2023</div>
+          <div class="tl-role" data-i18n="exp2.role">Erasmus+ Stajı</div>
+          <div class="tl-company" data-i18n="exp2.company">IAFA · Braga, Portekiz</div>
+          <p class="tl-desc" data-i18n="exp2.desc">Portekiz'de uluslararası bir ekip içinde staj yaparak farklı bir çalışma kültüründe deneyim kazandım.</p>
+        </li>
+        <li>
+          <div class="tl-date" data-i18n="exp3.date">06.2022 – 09.2022</div>
+          <div class="tl-role" data-i18n="exp3.role">Yaz Stajı — Unity Geliştirici</div>
+          <div class="tl-company">IM Park</div>
+          <p class="tl-desc" data-i18n="exp3.desc">Unity ve C# kullanarak arayüz bileşenleri ve etkileşimli oyun öğeleri geliştirdim.</p>
+        </li>
+        <li>
+          <div class="tl-date" data-i18n="exp4.date">10.2021 – 03.2022</div>
+          <div class="tl-role" data-i18n="exp4.role">Öğretim Asistanı</div>
+          <div class="tl-company" data-i18n="exp4.company">TED Üniversitesi · Ankara, Türkiye</div>
+          <p class="tl-desc" data-i18n="exp4.desc">Java, Veri Yapıları ve Yazılım Mühendisliği derslerinde 30'dan fazla öğrenciye rehberlik ederek kodlama becerilerinin gelişimine katkı sağladım.</p>
+        </li>
+      </ol>
+
+      <h3 class="subhead" data-i18n="dev.projectsHeading">Projeler</h3>
+      <div class="project-grid">
+        <div class="project-card">
+          <h4 data-i18n="proj1.title">Görev Yönetim Sistemi</h4>
+          <p data-i18n="proj1.desc">Rol tabanlı yetkilendirme ile çalışan görevlerinin yönetildiği katmanlı bir backend mimarisi. Admin/Kullanıcı rolleri için tam CRUD işlemleri ve Postman ile test edilmiş REST uç noktaları içeriyor.</p>
+          <div class="tag-row"><span>ASP.NET Core</span><span>EF Core</span><span>SQL Server</span><span>REST API</span></div>
+        </div>
+        <div class="project-card">
+          <h4>EcoFriends</h4>
+          <p data-i18n="proj2.desc">Sürdürülebilir davranışları teşvik eden oyunlaştırılmış bir mobil uygulama. Puan/ödül sistemi, geri dönüşüm takibi ve görüntü işleme ile malzeme tarama içeriyor; 4 kişilik bir Agile ekipte geliştirildi.</p>
+          <div class="tag-row"><span>Cross-platform</span><span>REST API</span><span>Image Processing</span></div>
+        </div>
+        <div class="project-card">
+          <h4 data-i18n="proj3.title">Ofis Nabzı</h4>
+          <p data-i18n="proj3.desc">İş yerinde anonim geri bildirim için gerçek zamanlı bir mesajlaşma platformu. Firestore'un onSnapshot dinleyicileriyle anlık güncellemeler, emoji tepkileri ve localStorage tabanlı anonim kimlik yönetimi içeriyor.</p>
+          <div class="tag-row"><span>Firebase</span><span>Firestore</span><span>Realtime Database</span><span>JavaScript</span></div>
+        </div>
+        <div class="project-card">
+          <h4>Nefis Tatlılar</h4>
+          <p data-i18n="proj4.desc">3D kitap animasyonlu, malzeme eşleştirmeye dayalı bir tarif keşif uygulaması. Kullanıcının girdiği malzemelere göre tarifleri puanlayıp sıralayan bir algoritma ve tam dinamik bir içerik motoru içeriyor.</p>
+          <div class="tag-row"><span>HTML</span><span>CSS3</span><span>JavaScript</span><span>CSS 3D</span></div>
+        </div>
+        <div class="project-card">
+          <h4>Yıldız Haritam</h4>
+          <p data-i18n="proj5.desc">Doğum tarihi, saati ve yerine göre natal harita ve burç uyumu (sinastri) analizi üreten bağımsız bir web uygulaması. Gezegen konumlarını gösteren interaktif bir SVG zodyak çarkı ve iki haritayı karşılaştıran bir sinastri modülü içeriyor.</p>
+          <div class="tag-row"><span>SVG</span><span>Astronomical Calculations</span><span>JavaScript</span></div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h3 class="subhead" data-i18n="dev.educationHeading">Eğitim</h3>
+          <ul class="list-plain">
+            <li>
+              <div class="edu-degree" data-i18n="edu1.degree">Bilgisayar Mühendisliği Yüksek Lisansı</div>
+              <div class="edu-school" data-i18n="edu1.school">Ankara Üniversitesi</div>
+              <div class="edu-date" data-i18n="edu1.date">09.2026 – Devam ediyor</div>
+            </li>
+            <li>
+              <div class="edu-degree" data-i18n="edu2.degree">Bilgisayar Mühendisliği Lisansı</div>
+              <div class="edu-school" data-i18n="edu2.school">TED Üniversitesi</div>
+              <div class="edu-date">2019 – 2024</div>
+            </li>
+            <li>
+              <div class="edu-degree" data-i18n="edu3.school">Ayşeabla Fen Lisesi</div>
+              <div class="edu-date">2015 – 2019</div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="subhead" data-i18n="dev.certsHeading">Sertifikalar</h3>
+          <ul class="list-plain">
+            <li>
+              <div class="cert-title">The Complete SQL Bootcamp</div>
+              <div class="cert-desc" data-i18n="cert1.desc">SQL sorguları ve veri analizi tekniklerinde uzmanlaştım.</div>
+            </li>
+            <li>
+              <div class="cert-title">Intro to Operating Systems</div>
+              <div class="cert-desc" data-i18n="cert2.desc">Bellek yönetimi, segmentasyon ve sayfalama.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMMUNITY ============ -->
+  <section class="profile" id="community" data-accent="community">
+    <div class="container">
+      <p class="eyebrow" data-i18n="community.eyebrow">Topluluk Liderliği</p>
+      <h2 class="section-headline" data-i18n="community.headline">Bir gençlik derneğine başkanlık ediyorum.</h2>
+
+      <div class="org-card">
+        <div class="org-head">
+          <div class="org-name">Bilge Gençlik Eğitim Derneği</div>
+          <div class="org-role" data-i18n="community.role">Kurucu &amp; Başkan</div>
+        </div>
+        <div class="org-location">Kızılcahamam, Ankara</div>
+        <p class="org-desc" data-i18n="community.desc">Bilge Gençlik Eğitim Derneği (BİLGED), Ankara'nın Kızılcahamam ilçesinde gençlerin kişisel ve mesleki gelişimini destekliyor. Eğitim, kültür-sanat, çevre ve gönüllülük alanlarında yürüttüğümüz projelerle gençlere uluslararası deneyim kazandırıyor, öğrenme ve üretme alanı açıyoruz.</p>
+        <div class="stat-row">
+          <div><div class="stat-num">10+</div><div class="stat-label" data-i18n="community.stat1">Proje</div></div>
+          <div><div class="stat-num">20+</div><div class="stat-label" data-i18n="community.stat2">Ülke İşbirliği</div></div>
+          <div><div class="stat-num">300+</div><div class="stat-label" data-i18n="community.stat3">Katılımcı</div></div>
+          <div><div class="stat-num">80+</div><div class="stat-label" data-i18n="community.stat4">Gönüllü</div></div>
+        </div>
+        <a class="org-link" href="https://bilgegenclik.org" target="_blank" rel="noopener">
+          <span data-i18n="community.link">Derneği ziyaret et</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </a>
+      </div>
+
+      <div class="thread">
+        <div class="thread-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+        </div>
+        <div>
+          <div class="thread-label" data-i18n="community.threadLabel">Uluslararası Bağlantı</div>
+          <p class="thread-desc" data-i18n="community.threadDesc">Uluslararası deneyimim Erasmus+ ile başladı: 2023'te Portekiz'deki IAFA'da staj yaptım. Bugün derneğimizin Erasmus+ projeleri aracılığıyla aynı fırsatı başka gençlere sunuyoruz.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PERSONAL ============ -->
+  <section class="profile" id="personal" data-accent="personal">
+    <div class="container">
+      <p class="eyebrow" data-i18n="personal.eyebrow">Kişisel &amp; Sosyal</p>
+      <h2 class="section-headline" data-i18n="personal.headline">Ekranın dışında da üretmeyi seviyorum.</h2>
+
+      <div class="personal-grid">
+        <div class="personal-card">
+          <svg class="personal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8c0-2.2 3.1-4 7-4s7 1.8 7 4"/><path d="M5 8v9c0 1.7 3.1 3 7 3s7-1.3 7-3V8"/><path d="M5 12.5c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>
+          <h3 data-i18n="personal.langHeading">Diller</h3>
+          <div class="lang-line">
+            <span class="lang-name" data-i18n="personal.lang.en">İngilizce</span>
+            <span class="lang-level" data-i18n="personal.lang.enLevel">İleri</span>
+          </div>
+          <div class="dots"><span class="filled"></span><span class="filled"></span><span class="filled"></span><span class="filled"></span><span></span></div>
+          <div class="lang-line">
+            <span class="lang-name" data-i18n="personal.lang.es">İspanyolca</span>
+            <span class="lang-level" data-i18n="personal.lang.esLevel">Başlangıç</span>
+          </div>
+          <div class="dots"><span class="filled"></span><span></span><span></span><span></span><span></span></div>
+        </div>
+
+        <div class="personal-card">
+          <svg class="personal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9"/><path d="M3 17h18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Z"/><path d="M7 10v3M10.5 10v4M14 10v3M17.5 10v4"/></svg>
+          <h3 data-i18n="personal.pianoHeading">Piyano</h3>
+          <p data-i18n="personal.pianoDesc">London College of Music (LCM) kademeli piyano sınavlarından sertifikalarım var.</p>
+        </div>
+
+        <div class="personal-card">
+          <svg class="personal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 7c2 2 4 2.6 6 2.6S16 9 18 7M4.5 14c2.5-1 5-1.2 7.5-1.2s5 .2 7.5 1.2M9 3.3C10 6 10 9 8.7 12c-1.3 3-1.3 5.7-.2 8.5"/></svg>
+          <h3 data-i18n="personal.volleyHeading">Voleybol</h3>
+          <p data-i18n="personal.volleyDesc">Eskiden lisanslı olarak voleybol oynadım, bugün amatör düzeyde oynamaya devam ediyorum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <h2 class="footer-headline" data-i18n="footer.heading">Birlikte çalışalım</h2>
+        <p class="footer-desc" data-i18n="footer.desc">Yeni fırsatlara ve iş birliklerine açığım.</p>
+      </div>
+      <div class="footer-links">
+        <a class="icon-link" href="mailto:bilgeoyar01@gmail.com" aria-label="E-posta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="m3.5 6 8.5 7 8.5-7"/></svg>
+        </a>
+        <a class="icon-link" href="https://github.com/Bilgeoyar" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.19c0 4.49 2.87 8.3 6.84 9.65.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.46-1.19-1.11-1.51-1.11-1.51-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.55 2.34 1.1 2.91.84.09-.66.35-1.1.63-1.36-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.32 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.64 1.03 2.76 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.2 10.2 0 0 0 22 12.19C22 6.58 17.52 2 12 2Z"/></svg>
+        </a>
+        <a class="icon-link" href="https://www.linkedin.com/in/ceren-bilge-oyar-b39936205" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002ZM7 8.48H3V21h4V8.48Zm6.32 0H9.35V21h3.94v-6.57c0-3.66 4.77-3.96 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.68-2.91V8.48Z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="copyright">© 2026 Ceren Bilge Oyar</span>
+      <span data-i18n="footer.rights">Tüm hakları saklıdır.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var i18n = {
+    tr: {
+      "meta.title": "Ceren Bilge Oyar — Full Stack Geliştirici",
+      "a11y.skip": "İçeriğe geç",
+      "nav.dev": "Geliştirici",
+      "nav.community": "Topluluk",
+      "nav.personal": "Kişisel",
+      "hero.kicker": "Full Stack Geliştirici",
+      "hero.lede": "Ankara merkezli bir Full Stack Developer'ım; üç yıldır .NET ekosisteminde büyük ölçekli kamu sistemleri geliştiriyorum. Yazılımın yanında bir gençlik derneğine başkanlık ediyor, piyano çalıyor ve eskiden lisanslı voleybol oynuyordum.",
+      "hero.ctaEmail": "E-posta gönder",
+      "hero.facet.dev": "Geliştirici",
+      "hero.facet.community": "Topluluk Lideri",
+      "hero.facet.personal": "Piyanist & Voleybolcu",
+      "dev.eyebrow": "Yazılım Geliştirici",
+      "dev.headline": "Üç yıldır büyük ölçekli sistemler kuruyorum.",
+      "dev.about": "\u002ENET Core, .NET, MVC, Entity Framework, SQL ve MongoDB alanlarında üç yıllık profesyonel deneyime sahip bir Full Stack Developer'ım. Backend geliştirme ve veritabanı optimizasyonunda güçlü bir geçmişim var; HTML, CSS ve JavaScript ile frontend becerileriyle destekliyorum. Agile/Scrum ortamlarında çalışıyor, bir gençlik derneğinin başkanlığını yürütüyorum.",
+      "dev.serviceNote": "Web sitesi tasarımı da yapıyorum.",
+      "dev.serviceCta": "Örnek çalışmalar için ulaşabilirsiniz",
+      "dev.skillsHeading": "Teknik Beceriler",
+      "dev.group.backend": "Backend",
+      "dev.group.frontend": "Frontend",
+      "dev.group.db": "Veritabanları",
+      "dev.group.tools": "Araçlar & Platformlar",
+      "dev.group.concepts": "Kavramlar & Pratikler",
+      "dev.group.methods": "Metodolojiler",
+      "dev.experienceHeading": "Deneyim",
+      "exp1.date": "09.2023 – Devam ediyor",
+      "exp1.company": "LST Yazılım · Ankara, Türkiye",
+      "exp1.desc": "MERSİS — Türkiye'deki tüm şirketlerin ve yabancı şirket şubelerinin kaydını yöneten ulusal platform üzerinde çalışıyorum. ASP.NET MVC ve Entity Framework ile backend servisleri geliştiriyor, SQL sorgularını optimize ediyor, MongoDB ile ölçeklenebilirliği artırıyor ve SOAP/REST servislerini diğer kamu sistemleriyle entegre ediyorum.",
+      "exp2.role": "Erasmus+ Stajı",
+      "exp2.company": "IAFA · Braga, Portekiz",
+      "exp2.desc": "Portekiz'de uluslararası bir ekip içinde staj yaparak farklı bir çalışma kültüründe deneyim kazandım.",
+      "exp3.role": "Yaz Stajı — Unity Geliştirici",
+      "exp3.desc": "Unity ve C# kullanarak arayüz bileşenleri ve etkileşimli oyun öğeleri geliştirdim.",
+      "exp4.role": "Öğretim Asistanı",
+      "exp4.company": "TED Üniversitesi · Ankara, Türkiye",
+      "exp4.desc": "Java, Veri Yapıları ve Yazılım Mühendisliği derslerinde 30'dan fazla öğrenciye rehberlik ederek kodlama becerilerinin gelişimine katkı sağladım.",
+      "dev.projectsHeading": "Projeler",
+      "proj1.title": "Görev Yönetim Sistemi",
+      "proj1.desc": "Rol tabanlı yetkilendirme ile çalışan görevlerinin yönetildiği katmanlı bir backend mimarisi. Admin/Kullanıcı rolleri için tam CRUD işlemleri ve Postman ile test edilmiş REST uç noktaları içeriyor.",
+      "proj2.desc": "Sürdürülebilir davranışları teşvik eden oyunlaştırılmış bir mobil uygulama. Puan/ödül sistemi, geri dönüşüm takibi ve görüntü işleme ile malzeme tarama içeriyor; 4 kişilik bir Agile ekipte geliştirildi.",
+      "proj3.title": "Ofis Nabzı",
+      "proj3.desc": "İş yerinde anonim geri bildirim için gerçek zamanlı bir mesajlaşma platformu. Firestore'un onSnapshot dinleyicileriyle anlık güncellemeler, emoji tepkileri ve localStorage tabanlı anonim kimlik yönetimi içeriyor.",
+      "proj4.desc": "3D kitap animasyonlu, malzeme eşleştirmeye dayalı bir tarif keşif uygulaması. Kullanıcının girdiği malzemelere göre tarifleri puanlayıp sıralayan bir algoritma ve tam dinamik bir içerik motoru içeriyor.",
+      "proj5.desc": "Doğum tarihi, saati ve yerine göre natal harita ve burç uyumu (sinastri) analizi üreten bağımsız bir web uygulaması. Gezegen konumlarını gösteren interaktif bir SVG zodyak çarkı ve iki haritayı karşılaştıran bir sinastri modülü içeriyor.",
+      "dev.educationHeading": "Eğitim",
+      "edu1.degree": "Bilgisayar Mühendisliği Yüksek Lisansı",
+      "edu1.school": "Ankara Üniversitesi",
+      "edu1.date": "09.2026 – Devam ediyor",
+      "edu2.degree": "Bilgisayar Mühendisliği Lisansı",
+      "edu2.school": "TED Üniversitesi",
+      "edu3.school": "Ayşeabla Fen Lisesi",
+      "dev.certsHeading": "Sertifikalar",
+      "cert1.desc": "SQL sorguları ve veri analizi tekniklerinde uzmanlaştım.",
+      "cert2.desc": "Bellek yönetimi, segmentasyon ve sayfalama.",
+      "community.eyebrow": "Topluluk Liderliği",
+      "community.headline": "Bir gençlik derneğine başkanlık ediyorum.",
+      "community.role": "Kurucu & Başkan",
+      "community.desc": "Bilge Gençlik Eğitim Derneği (BİLGED), Ankara'nın Kızılcahamam ilçesinde gençlerin kişisel ve mesleki gelişimini destekliyor. Eğitim, kültür-sanat, çevre ve gönüllülük alanlarında yürüttüğümüz projelerle gençlere uluslararası deneyim kazandırıyor, öğrenme ve üretme alanı açıyoruz.",
+      "community.stat1": "Proje",
+      "community.stat2": "Ülke İşbirliği",
+      "community.stat3": "Katılımcı",
+      "community.stat4": "Gönüllü",
+      "community.link": "Derneği ziyaret et",
+      "community.threadLabel": "Uluslararası Bağlantı",
+      "community.threadDesc": "Uluslararası deneyimim Erasmus+ ile başladı: 2023'te Portekiz'deki IAFA'da staj yaptım. Bugün derneğimizin Erasmus+ projeleri aracılığıyla aynı fırsatı başka gençlere sunuyoruz.",
+      "personal.eyebrow": "Kişisel & Sosyal",
+      "personal.headline": "Ekranın dışında da üretmeyi seviyorum.",
+      "personal.langHeading": "Diller",
+      "personal.lang.en": "İngilizce",
+      "personal.lang.enLevel": "İleri",
+      "personal.lang.es": "İspanyolca",
+      "personal.lang.esLevel": "Başlangıç",
+      "personal.pianoHeading": "Piyano",
+      "personal.pianoDesc": "London College of Music (LCM) kademeli piyano sınavlarından sertifikalarım var.",
+      "personal.volleyHeading": "Voleybol",
+      "personal.volleyDesc": "Eskiden lisanslı olarak voleybol oynadım, bugün amatör düzeyde oynamaya devam ediyorum.",
+      "footer.heading": "Birlikte çalışalım",
+      "footer.desc": "Yeni fırsatlara ve iş birliklerine açığım.",
+      "footer.rights": "Tüm hakları saklıdır."
+    },
+    en: {
+      "meta.title": "Ceren Bilge Oyar — Full Stack Developer",
+      "a11y.skip": "Skip to content",
+      "nav.dev": "Developer",
+      "nav.community": "Community",
+      "nav.personal": "Personal",
+      "hero.kicker": "Full Stack Developer",
+      "hero.lede": "I'm a Full Stack Developer based in Ankara, building large-scale public systems in the .NET ecosystem for three years. Alongside software, I serve as president of a youth association, play the piano, and used to play volleyball at a licensed, competitive level.",
+      "hero.ctaEmail": "Email me",
+      "hero.facet.dev": "Developer",
+      "hero.facet.community": "Community Leader",
+      "hero.facet.personal": "Pianist & Volleyball Player",
+      "dev.eyebrow": "Software Developer",
+      "dev.headline": "Building large-scale systems for three years.",
+      "dev.about": "Full Stack Developer with 3 years of professional experience in .NET Core, .NET, MVC, Entity Framework, SQL, and MongoDB. Strong background in backend development and database optimization, combined with frontend skills in HTML, CSS, and JavaScript. Experienced in Agile/Scrum environments, and currently president of a youth association.",
+      "dev.serviceNote": "I also design websites.",
+      "dev.serviceCta": "Reach out for example designs",
+      "dev.skillsHeading": "Technical Skills",
+      "dev.group.backend": "Backend",
+      "dev.group.frontend": "Frontend",
+      "dev.group.db": "Databases",
+      "dev.group.tools": "Tools & Platforms",
+      "dev.group.concepts": "Concepts & Practices",
+      "dev.group.methods": "Methodologies",
+      "dev.experienceHeading": "Experience",
+      "exp1.date": "09.2023 – Present",
+      "exp1.company": "LST Yazılım · Ankara, Turkey",
+      "exp1.desc": "I work on MERSİS, the national platform that manages company registrations across Turkey. I build backend services with ASP.NET MVC and Entity Framework, optimize SQL queries, use MongoDB to improve scalability, and integrate SOAP/REST services with other government systems.",
+      "exp2.role": "Erasmus+ Internship",
+      "exp2.company": "IAFA · Braga, Portugal",
+      "exp2.desc": "Completed an international internship in Portugal, gaining experience within a different professional culture.",
+      "exp3.role": "Summer Internship — Unity Developer",
+      "exp3.desc": "Contributed to UI components and interactive elements in Unity using C#.",
+      "exp4.role": "Teaching Assistant",
+      "exp4.company": "TED University · Ankara, Turkey",
+      "exp4.desc": "Supported 30+ students in Java, Data Structures, and Software Engineering, helping improve their coding proficiency.",
+      "dev.projectsHeading": "Projects",
+      "proj1.title": "Task Management System",
+      "proj1.desc": "A layered backend for role-based task management, with full CRUD for Admin/User roles and REST endpoints tested through Postman.",
+      "proj2.desc": "A gamified mobile app promoting eco-friendly habits, with a points/reward system, recycling tracking, and image processing for material scanning — built with a 4-person Agile team.",
+      "proj3.title": "Ofis Nabzı (Office Pulse)",
+      "proj3.desc": "A real-time anonymous messaging platform for workplace feedback, with live updates via Firestore's onSnapshot listeners, emoji reactions, and localStorage-based anonymous identity.",
+      "proj4.desc": "A recipe-discovery app with a 3D book UI, matching recipes to the ingredients a user has on hand, backed by a fully dynamic search and rendering engine.",
+      "proj5.desc": "A standalone web app generating a natal chart reading and love-compatibility analysis from birth data, featuring an interactive SVG zodiac wheel and a synastry module that scores planetary aspects across two charts.",
+      "dev.educationHeading": "Education",
+      "edu1.degree": "M.Sc. in Computer Engineering",
+      "edu1.school": "Ankara University",
+      "edu1.date": "09.2026 – Present",
+      "edu2.degree": "B.Sc. in Computer Engineering",
+      "edu2.school": "TED University",
+      "edu3.school": "Ayşeabla Science High School",
+      "dev.certsHeading": "Certifications",
+      "cert1.desc": "Mastered SQL queries and data analysis techniques.",
+      "cert2.desc": "Memory management, segmentation, and paging.",
+      "community.eyebrow": "Community Leadership",
+      "community.headline": "I serve as president of a youth association.",
+      "community.role": "Founder & President",
+      "community.desc": "Bilge Gençlik Eğitim Derneği (BİLGED) supports young people's personal and professional development from Kızılcahamam, Ankara. Through projects in education, culture, environment, and volunteering, we give young people space to learn, take part, and gain international experience.",
+      "community.stat1": "Projects",
+      "community.stat2": "Country Partnerships",
+      "community.stat3": "Participants",
+      "community.stat4": "Volunteers",
+      "community.link": "Visit the association",
+      "community.threadLabel": "International Thread",
+      "community.threadDesc": "My international experience started with Erasmus+: I interned at IAFA in Portugal in 2023. Today our association creates the same opportunity for other young people through its own Erasmus+ projects.",
+      "personal.eyebrow": "Personal & Social",
+      "personal.headline": "I like making things off-screen too.",
+      "personal.langHeading": "Languages",
+      "personal.lang.en": "English",
+      "personal.lang.enLevel": "Advanced",
+      "personal.lang.es": "Spanish",
+      "personal.lang.esLevel": "Beginner",
+      "personal.pianoHeading": "Piano",
+      "personal.pianoDesc": "Certified through London College of Music (LCM) graded piano exams.",
+      "personal.volleyHeading": "Volleyball",
+      "personal.volleyDesc": "I used to play volleyball at a licensed, competitive level; today I play at an amateur level.",
+      "footer.heading": "Let's work together",
+      "footer.desc": "Open to new opportunities and collaborations.",
+      "footer.rights": "All rights reserved."
+    }
+  };
+
+  var langButtons = document.querySelectorAll('.lang-toggle button');
+  var i18nEls = document.querySelectorAll('[data-i18n]');
+
+  function applyLang(lang){
+    document.documentElement.lang = lang;
+    i18nEls.forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      var dict = i18n[lang] || i18n.tr;
+      if (dict[key] !== undefined){
+        el.textContent = dict[key];
+      }
+    });
+    langButtons.forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    try { localStorage.setItem('cbo_lang', lang); } catch(e){}
+  }
+
+  langButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      applyLang(btn.getAttribute('data-lang'));
+    });
+  });
+
+  var savedLang = 'tr';
+  try {
+    savedLang = localStorage.getItem('cbo_lang') || 'tr';
+  } catch(e){}
+  applyLang(savedLang);
+
+  document.getElementById('copyright').textContent = '© ' + new Date().getFullYear() + ' Ceren Bilge Oyar';
+
+  // Active nav pill + accent color on scroll
+  var sections = document.querySelectorAll('.profile');
+  var navLinks = document.querySelectorAll('nav.pills a');
+  var accentMap = { dev: 'var(--accent-dev)', community: 'var(--accent-community)', personal: 'var(--accent-personal)' };
+
+  if ('IntersectionObserver' in window){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          var id = entry.target.getAttribute('id');
+          var accentKey = entry.target.getAttribute('data-accent');
+          navLinks.forEach(function(link){
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+          if (accentKey && accentMap[accentKey]){
+            document.documentElement.style.setProperty('--accent', accentMap[accentKey]);
+          }
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+    sections.forEach(function(sec){ observer.observe(sec); });
+  }
+})();
+</script>
+
+</body>
+</html>
